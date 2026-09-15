@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Machine-Assisted Mathematical Research Notes</title>
+  <meta name="description" content="AI-assisted research notes and Lean formalizations for selected Scottish Book problems.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #161616;
+      --muted: #666666;
+      --line: #dddddd;
+      --soft: #f7f7f7;
+      --accent: #1f5fbf;
+      --warn-bg: #fff4e5;
+      --warn-border: #d97706;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.55;
+    }
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 48px 22px 72px;
+    }
+    h1 {
+      font-size: 2rem;
+      line-height: 1.2;
+      margin: 0 0 10px;
+    }
+    h2 {
+      font-size: 1.35rem;
+      margin: 38px 0 14px;
+    }
+    h3 {
+      font-size: 1.05rem;
+      margin: 0 0 7px;
+    }
+    p { margin: 8px 0; }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .notice {
+      margin: 28px 0;
+      padding: 18px 20px;
+      border-left: 5px solid var(--warn-border);
+      background: var(--warn-bg);
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    .meta {
+      padding: 16px 18px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .notes {
+      display: grid;
+      gap: 14px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px 19px;
+    }
+    .status {
+      color: var(--muted);
+      font-size: .94rem;
+      margin: 3px 0;
+    }
+    .links {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      font-size: .95rem;
+    }
+    footer {
+      margin-top: 48px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .92rem;
+    }
+    code {
+      background: var(--soft);
+      padding: 0.08em 0.3em;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Machine-Assisted Mathematical Research Notes</h1>
+  <p class="subtitle">Selected research notes and companion Lean formalizations for problems from the Scottish Book.</p>
+
+  <div class="notice">
+    No independent human mathematical review has been performed.
+  </div>
+
+  <div class="meta">
+    <p><strong>AI-generation coordinators and contacts</strong></p>
+    <p>
+      Chuyang Chen — <a href="mailto:22535018@zju.edu.cn">22535018@zju.edu.cn</a><br>
+      Chenhao Bian — <a href="mailto:bch26@mails.tsinghua.edu.cn">bch26@mails.tsinghua.edu.cn</a>
+    </p>
+    <p>Mathematical drafts were generated with <strong>GPT-5.6 Sol</strong> under their supervision.</p>
+    <p><strong>Version:</strong> v1.0 &nbsp;·&nbsp; <strong>First public release:</strong> 2026-09-15</p>
+    <p>
+      <a href="README.md">README</a> ·
+      <a href="POLICY.md">Publication and verification policy</a>
+    </p>
+  </div>
+
+  <h2>Notes</h2>
+
+  <div class="notes">
+    <section class="card">
+      <h3>Problem 45</h3>
+      <p class="status">E1 — AI cross-checked; <strong>NOT HUMAN VERIFIED</strong></p>
+      <p class="status">Formal verification: <strong>F1</strong></p>
+      <div class="links">
+        <a href="notes/problem-45/paper.pdf">PDF</a>
+        <a href="notes/problem-45/paper.tex">TeX</a>
+        <a href="notes/problem-45/Main.lean">Lean</a>
+        <a href="notes/problem-45/PROVENANCE.md">Provenance</a>
+        <a href="notes/problem-45/FORMAL_VERIFICATION.md">Formal verification</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Problem 125</h3>
+      <p class="status">E1 — AI cross-checked; <strong>NOT HUMAN VERIFIED</strong></p>
+      <p class="status">Formal verification: <strong>F1</strong></p>
+      <div class="links">
+        <a href="notes/problem-125/paper.pdf">PDF</a>
+        <a href="notes/problem-125/paper.tex">TeX</a>
+        <a href="notes/problem-125/Main.lean">Lean</a>
+        <a href="notes/problem-125/PROVENANCE.md">Provenance</a>
+        <a href="notes/problem-125/FORMAL_VERIFICATION.md">Formal verification</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Problem 128</h3>
+      <p class="status">E1 — AI cross-checked; <strong>NOT HUMAN VERIFIED</strong></p>
+      <p class="status">Formal verification: <strong>Conditional F1</strong>; full-paper formalization: <strong>PARTIAL</strong></p>
+      <div class="links">
+        <a href="notes/problem-128/paper.pdf">PDF</a>
+        <a href="notes/problem-128/paper.tex">TeX</a>
+        <a href="notes/problem-128/Main.lean">Lean</a>
+        <a href="notes/problem-128/PROVENANCE.md">Provenance</a>
+        <a href="notes/problem-128/FORMAL_VERIFICATION.md">Formal verification</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Problem 129</h3>
+      <p class="status">E1 — AI cross-checked; <strong>NOT HUMAN VERIFIED</strong></p>
+      <p class="status">Formal verification: <strong>Conditional F1</strong>; full-paper formalization: <strong>PARTIAL</strong></p>
+      <div class="links">
+        <a href="notes/problem-129/paper.pdf">PDF</a>
+        <a href="notes/problem-129/paper.tex">TeX</a>
+        <a href="notes/problem-129/Main.lean">Lean</a>
+        <a href="notes/problem-129/PROVENANCE.md">Provenance</a>
+        <a href="notes/problem-129/FORMAL_VERIFICATION.md">Formal verification</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Problem 150</h3>
+      <p class="status">E1 — AI cross-checked; <strong>NOT HUMAN VERIFIED</strong></p>
+      <p class="status">Formal verification: <strong>Conditional F1</strong> (explicit external mathematical axiom disclosed)</p>
+      <div class="links">
+        <a href="notes/problem-150/paper.pdf">PDF</a>
+        <a href="notes/problem-150/paper.tex">TeX</a>
+        <a href="notes/problem-150/Main.lean">Lean</a>
+        <a href="notes/problem-150/PROVENANCE.md">Provenance</a>
+        <a href="notes/problem-150/FORMAL_VERIFICATION.md">Formal verification</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Problem 164</h3>
+      <p class="status">E1 — AI cross-checked; <strong>NOT HUMAN VERIFIED</strong></p>
+      <p class="status">Formal verification: <strong>F1</strong></p>
+      <div class="links">
+        <a href="notes/problem-164/paper.pdf">PDF</a>
+        <a href="notes/problem-164/paper.tex">TeX</a>
+        <a href="notes/problem-164/Main.lean">Lean</a>
+        <a href="notes/problem-164/PROVENANCE.md">Provenance</a>
+        <a href="notes/problem-164/FORMAL_VERIFICATION.md">Formal verification</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Problem 165</h3>
+      <p class="status">E1 — AI cross-checked; <strong>NOT HUMAN VERIFIED</strong></p>
+      <p class="status">Formal verification: <strong>F1</strong></p>
+      <div class="links">
+        <a href="notes/problem-165/paper.pdf">PDF</a>
+        <a href="notes/problem-165/paper.tex">TeX</a>
+        <a href="notes/problem-165/Main.lean">Lean</a>
+        <a href="notes/problem-165/PROVENANCE.md">Provenance</a>
+        <a href="notes/problem-165/FORMAL_VERIFICATION.md">Formal verification</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Problem 174</h3>
+      <p class="status">E1 — AI cross-checked; <strong>NOT HUMAN VERIFIED</strong></p>
+      <p class="status">Formal verification: <strong>F1 for a related real-scalar formal counterexample</strong></p>
+      <p class="status">The flat-function construction in the paper is not the construction formalized in Lean.</p>
+      <div class="links">
+        <a href="notes/problem-174/paper.pdf">PDF</a>
+        <a href="notes/problem-174/paper.tex">TeX</a>
+        <a href="notes/problem-174/Main.lean">Lean</a>
+        <a href="notes/problem-174/PROVENANCE.md">Provenance</a>
+        <a href="notes/problem-174/FORMAL_VERIFICATION.md">Formal verification</a>
+      </div>
+    </section>
+  </div>
+
+  <h2>Verification notice</h2>
+  <p>
+    Successful Lean verification establishes correctness of the formalized statement relative to its assumptions.
+    It does not by itself establish that the formalized statement is exactly equivalent to the historical problem as originally formulated.
+  </p>
+
+  <h2>Acknowledgments</h2>
+  <p>Chuyang Chen and Chenhao Bian are grateful to their advisor, Fei Yu, for his guidance on this project.</p>
+
+  <footer>
+    <p>
+      Readers who know relevant prior literature, identify an error, or wish to check an argument are especially encouraged
+      to contact the coordinators or open an issue in the repository.
+    </p>
+  </footer>
+</main>
+</body>
+</html>
