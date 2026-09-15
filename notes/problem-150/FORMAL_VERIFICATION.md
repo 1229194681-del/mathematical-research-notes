@@ -1,4 +1,4 @@
-# Formal Verification — Problem 150
+﻿# Formal Verification 鈥?Problem 150
 
 ## Status
 
@@ -70,3 +70,4 @@ Successful Lean verification establishes correctness of the formalized statement
 The `Main.lean` file in this public directory is a source snapshot.
 
 The recorded PASS result was obtained in the original `PaperFormalization` Lake project layout using the source path shown above.
+

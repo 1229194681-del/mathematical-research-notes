@@ -1,4 +1,4 @@
-# Formal Verification — Problem 174
+﻿# Formal Verification 鈥?Problem 174
 
 ## Status
 
@@ -75,3 +75,4 @@ The recorded PASS result was obtained in the original development layout at:
 `PaperFormalization/Scottish 174/Main.lean`
 
 A deprecation warning concerning `ContinuousLinearMap.mul_apply` was emitted; it did not invalidate compilation or kernel checking.
+
