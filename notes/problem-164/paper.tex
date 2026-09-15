@@ -1,0 +1,596 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalize,noabbrev]{cleveref}
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!45!black,
+  citecolor=blue!45!black,
+  urlcolor=blue!45!black,
+  pdftitle={Scottish Book Problem 164: Counterexamples, the Permutation Variant, and a Sharp Threshold},
+  pdfauthor={}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\Perm}{\operatorname{Perm}}
+
+\title{\textbf{Scottish Book Problem 164: Counterexamples, the Permutation Variant, and a Sharp Threshold}}
+\author{}
+\date{September 2026}
+
+\newcommand{\publicationstatus}{%
+\begin{center}
+\fbox{\begin{minipage}{0.92\linewidth}
+\small
+\textbf{AI EXPLORATORY MATHEMATICAL NOTE}\\[2pt]
+\textbf{Status:} E1 - AI cross-checked; \textbf{NO INDEPENDENT HUMAN REVIEW}\\
+\textbf{Version:} v1.0\\
+\textbf{First public release:} PENDING\\
+\textbf{Related Lean formalization:} the literal phase diagram and permutation-threshold statements used here have been kernel-checked in Lean; see the end matter for the exact scope.\\
+\end{minipage}}
+\end{center}
+\medskip
+}
+
+\begin{document}
+\maketitle
+
+\publicationstatus
+
+\begin{abstract}
+Scottish Book Problem 164 asks for a universal escape-time bound in a finite dynamical system on a subset of $[0,1]$. We construct counterexamples for every $0<\varepsilon<1/3$; under the permutation strengthening, the sharp threshold is $\varepsilon=1/6$.
+\end{abstract}
+
+\begin{quote}
+\small
+\textbf{Feedback.} This note has not undergone independent human mathematical review. Readers who know relevant prior literature, identify an error, or wish to check the argument are especially encouraged to contact the coordinators listed at the end of the paper or to open an issue in the repository.
+\end{quote}
+
+
+\section{The finite dynamical formulation}
+
+Let
+\[
+E=\{x_1<\cdots<x_n\}\subset[0,1],\qquad 0,1\in E,
+\]
+and let $T:E\to E$ satisfy
+\[
+|T(x)-x|>\eps\qquad (x\in E).
+\]
+
+\begin{definition}[Permissible move]
+For $y\in E$, write $y^-$ and $y^+$ for its immediate predecessor and successor in the ordered set $E$, whenever they exist. A permissible one-step move from $x\in E$ is a move to one of
+\[
+T(x),\qquad T(x)^-,\qquad T(x)^+,
+\]
+with the nonexistent endpoint neighbors omitted.
+\end{definition}
+
+For an escape radius $\rho\in(0,1)$ define the escape time from $x$ by
+\[
+\tau_\rho(x)
+=
+\inf\bigl\{m\ge0:\text{there is a permissible path }x=x_0,\ldots,x_m
+\text{ with }|x_m-x|\ge\rho\bigr\},
+\]
+with $\tau_\rho(x)=\infty$ if no such path exists. The original radius is $\rho=1/3$.
+
+The finite formulation considered here asks whether there is a universal $k$ for which every admissible system has a starting point $x$ satisfying
+\[
+\tau_{1/3}(x)\le \left\lfloor\frac{k}{\eps}\right\rfloor.
+\]
+This is the formulation of Problem~164 in the second edition of \emph{The Scottish Book}; see \cite[p.~262]{ScottishBook2}. The original statement requires only a transformation of the finite set into itself, and does not impose injectivity or surjectivity. Its wording can be read as prescribing exactly $\lfloor k/\eps\rfloor$ permissible steps rather than at most that many. This distinction is immaterial for the counterexample below, because the constructed trajectories are permanently trapped and therefore fail to escape after any number of steps.
+
+We first solve this literal version completely and then study the permutation strengthening.
+
+\section{The literal problem: a six-point permanent trap}
+
+\begin{theorem}[Permanent trap for arbitrary maps]\label{thm:literal-trap}
+For every $0<\eps<1/3$ there is a six-point set $E\subset[0,1]$ and a map $T:E\to E$ satisfying $|T(x)-x|>\eps$ for all $x$, such that
+\[
+\tau_{1/3}(x)=\infty\qquad\text{for every }x\in E.
+\]
+In particular no universal constant $k$ can exist in the literal formulation.
+\end{theorem}
+
+\begin{proof}
+Choose
+\[
+\eps<a<b<\frac13
+\]
+and let
+\[
+E=\{0,a,b,1-b,1-a,1\}.
+\]
+Define $T$ on the left cluster by
+\[
+T(0)=a,\qquad T(a)=0,\qquad T(b)=0,
+\]
+and on the right cluster by reflection:
+\[
+T(1)=1-a,\qquad T(1-a)=1,\qquad T(1-b)=1.
+\]
+Every $T$-jump has length greater than $\eps$. Moreover, if the current point lies in $\{0,a,b\}$, then $T(x)$ is either $0$ or $a$, and every existing nearest neighbor of $T(x)$ also lies in $\{0,a,b\}$. Hence the left cluster is forward invariant under all permissible moves. Its diameter is $b<1/3$. The same argument applies to the reflected right cluster, whose diameter is also $b$. Thus no permissible trajectory starting anywhere in $E$ can move a distance $1/3$ from its initial point.
+\end{proof}
+
+The opposite range is immediate.
+
+\begin{proposition}\label{prop:literal-largeeps}
+If $\eps\ge1/3$, then, for every admissible system, every starting point escapes by the exact $T$-move in one step.
+\end{proposition}
+
+\begin{proof}
+For every $x\in E$,
+\[
+|T(x)-x|>\eps\ge\frac13.
+\]
+\end{proof}
+
+\begin{remark}
+When $\eps\ge1$, no admissible system exists at all, since every two points of $[0,1]$ are at distance at most $1$. Thus the assertion in \cref{prop:literal-largeeps} is vacuous in that parameter range.
+\end{remark}
+
+Combining the two statements gives the exact phase diagram for the literal formulation.
+
+\begin{corollary}[Exact literal phase diagram]\label{cor:literal-phase}
+For the escape radius $1/3$:
+\[
+\begin{cases}
+0<\eps<1/3:&\text{there are all-start permanent traps};\\
+\eps\ge1/3:&\text{every point escapes in one step}.
+\end{cases}
+\]
+\end{corollary}
+
+\subsection{Minimality of six points}
+
+The preceding construction is also minimal among all-start permanent traps.
+
+\begin{proposition}[Six points are necessary]\label{prop:six-minimal}
+Suppose a system with $0,1\in E$ has no one-step escape of radius $1/3$ from any starting point. Then $|E|\ge6$. Consequently the six-point permanent trap in \cref{thm:literal-trap} is cardinality-minimal among all-start permanent traps.
+\end{proposition}
+
+\begin{proof}
+Start at $0$. Since $|T(0)-0|>\eps>0$, we have $T(0)>0$. Absence of one-step escape gives
+\[
+T(0)<\frac13.
+\]
+Because $1\in E$ and $T(0)<1$, the point $T(0)$ has a right neighbor $z\in E$. The move $0\to z$ is permissible, so again $z<1/3$. Thus $E$ contains at least three distinct points in $[0,1/3)$: $0$, $T(0)$, and $z$.
+
+Applying the reflected argument at $1$ yields at least three distinct points in $(2/3,1]$. The two triples are disjoint, so $|E|\ge6$.
+\end{proof}
+
+\section{The permutation strengthening}
+
+The six-point trap exploits noninjectivity. A natural strengthening is therefore to require $T$ to be injective. Since $E$ is finite, injectivity is equivalent to bijectivity.
+
+\begin{definition}[Permutation variant]
+A permutation system is an admissible system in which $T:E\to E$ is a permutation.
+\end{definition}
+
+It is useful first to record a basic connectivity fact.
+
+\begin{lemma}[Strong connectivity]\label{lem:strong-connectivity}
+For every permutation system, the directed graph of permissible moves is strongly connected.
+\end{lemma}
+
+\begin{proof}
+Fix $x\in E$ and let $R$ be the set of points reachable from $x$. By definition, $T(R)\subset R$. Since $T$ is injective and $R$ is finite, $|T(R)|=|R|$, hence
+\[
+T(R)=R.
+\]
+For every $y\in R$, choose $p\in R$ with $T(p)=y$. By the permissible-move rule, every existing nearest neighbor of $y$ also belongs to $R$. Thus $R$ is closed under adjacency in the ordered path $E$. As $R$ is nonempty and the ordered path is connected, $R=E$.
+\end{proof}
+
+In particular, for the original radius $1/3$---indeed, for every $\rho\le1/2$---every escape time is finite: from any $x\in[0,1]$, at least one of the endpoints $0,1$ is at distance at least $1/2$ from $x$, and strong connectivity gives a permissible path to that endpoint. The question is now quantitative.
+
+\section{The lower bound: arbitrarily slow permutation systems below $1/6$}
+
+We first construct a single slow macroblock.
+
+\subsection{A two-cluster slow corridor}
+
+Fix numbers
+\[
+0<\eta<D/2,\qquad D-2\eta>\eps,
+\]
+and an integer $M\ge1$. Inside an interval of width $D$, choose
+\[
+L_r=a+\frac{r\eta}{M},\qquad
+R_r=a+D-\frac{r\eta}{M}
+\qquad (0\le r\le M),
+\]
+so the physical order is
+\[
+L_0<\cdots<L_M<R_M<\cdots<R_0.
+\]
+Define the permutation, with indices taken modulo $M+1$, by
+\[
+T(L_r)=R_{r+1},\qquad T(R_r)=L_{r+1}.
+\]
+Every $T$-edge has length greater than $D-2\eta>\eps$.
+
+Assign the level
+\[
+\ell(L_r)=\ell(R_r)=r.
+\]
+The next lemma is the only dynamical feature we need.
+
+\begin{lemma}[Slow crossing of a macroblock]\label{lem:slow-block}
+Suppose this block is placed in a larger ordered system in which $T$ preserves each macroblock, so that a change of macroblock can occur only through an ordered-neighbor move across a physical boundary. If a permissible trajectory enters this block through one physical side and later exits through the opposite physical side, then between its last entry from the first side and that opposite-side exit it requires at least $\lceil M/2\rceil$ steps.
+\end{lemma}
+
+\begin{proof}
+Consider a left-to-right traversal; the other direction is symmetric. Before the first exit through the right boundary, take the last entry into the block through the left boundary. Because $T$ preserves macroblocks, any subsequent departure through the left boundary would force a later left-side re-entry before a right-side exit, contradicting the choice of the last entry. Hence the segment from this last entry until the right-side exit remains inside the block, except for its final exiting move.
+
+An entry from the left lands at $L_0$, hence the relevant segment starts inside the block at level $0$. The only way to leave the block through its right boundary is to be at $L_M$, because $T(L_M)=R_0$ and the right neighbor of $R_0$ is the first point of the next macroblock. Thus a left-to-right traversal must reach level $M$ before it can exit on the right.
+
+For $0\le r<M$, a permissible move from either $L_r$ or $R_r$ that remains in the block has next level among $r,r+1,r+2$ (with the obvious omissions at the ends). For $r=M$, the wrap images are $R_0$ and $L_0$; any move that remains in the block lands at level $0$ or $1$. Hence, before the first visit to level $M$, the level can increase by at most $2$ at each permissible step, while a wrap can only reset it to the low end. Starting from level $0$, at least $\lceil M/2\rceil$ steps are therefore needed to reach $L_M$. This already gives the asserted lower bound, without counting the final step that exits the block.
+\end{proof}
+
+\begin{remark}
+The constant $1/2$ in \cref{lem:slow-block} is not important. What matters is the linear lower bound $\Omega(M)$, uniform in the number of points of the surrounding construction.
+\end{remark}
+
+\subsection{Six slow macroblocks}
+
+\begin{theorem}[Arbitrarily large all-start delay for $\eps<1/6$]\label{thm:perm-lower}
+Fix $0<\eps<1/6$. For every $L>0$ there is a finite permutation system satisfying $|T(x)-x|>\eps$ for every $x\in E$ and
+\[
+\tau_{1/3}(x)>L
+\qquad\text{for every }x\in E.
+\]
+Consequently no estimate of the form $k/\eps$ can hold uniformly in the permutation variant when $\eps<1/6$.
+\end{theorem}
+
+\begin{proof}
+Choose
+\[
+\eps<D<\frac16
+\]
+and split $[0,1]$ into six macroblocks of width $D$, separated by five equal gaps
+\[
+h=\frac{1-6D}{5}>0.
+\]
+Inside each macroblock place a copy of the slow two-cluster corridor above, with $\eta>0$ sufficiently small that every $T$-edge is longer than $\eps$. Define $T$ blockwise, so $T$ is a permutation of the union $E$.
+
+A block together with either adjacent block has total span at most
+\[
+2D+h
+=
+\frac{1+4D}{5}
+<\frac13.
+\]
+Thus any two points lying in the same macroblock or in adjacent macroblocks are at distance less than $1/3$. Therefore a trajectory that escapes by distance $1/3$ from its starting point must reach beyond an adjacent macroblock. Since exact $T$-moves remain within a macroblock, the only way to change macroblock is through an ordered-neighbor portal at a physical boundary. Hence any escaping trajectory must completely traverse at least one intervening macroblock from one side to the other.
+
+Choose the first time the trajectory reaches a macroblock lying beyond an adjacent macroblock relative to its starting block. The intervening macroblock is then crossed from one physical side to the other. If the trajectory has previously left and re-entered that intervening block, apply \cref{lem:slow-block} to its last entry from the entry side before the opposite-side exit. Thus the crossing requires at least $\lceil M/2\rceil$ permissible steps. Taking $M>2L$ proves the assertion simultaneously for every starting point.
+\end{proof}
+
+For the original quantitative formulation, given any proposed universal $k$, choose $M$ so that
+\[
+\left\lceil\frac M2\right\rceil
+>
+\left\lfloor\frac{k}{\eps}\right\rfloor.
+\]
+This deals directly with the floor in the statement.
+
+\section{The upper bound: two steps suffice at and above $1/6$}
+
+We now prove the matching upper bound.
+
+\begin{theorem}[Sharp two-step theorem]\label{thm:two-step}
+Let $T$ be a permutation of $E$, let $0,1\in E$, and suppose
+\[
+|T(x)-x|>\eps\ge\frac16
+\qquad(x\in E).
+\]
+Then there exists a starting point $x\in E$ from which a permissible path of length at most two reaches a point at distance at least $1/3$ from $x$.
+\end{theorem}
+
+\begin{proof}
+Assume for contradiction that no starting point escapes distance $1/3$ in at most two steps.
+
+Define the two dynamical types
+\[
+R=\{x\in E:T(x)>x\},\qquad
+L=\{x\in E:T(x)<x\}.
+\]
+There are no fixed points because $|T(x)-x|>\eps>0$.
+
+First, the direction of consecutive exact $T$-jumps must alternate. Indeed, if
+\[
+x<T(x)<T^2(x),
+\]
+then
+\[
+T^2(x)-x
+=
+(T(x)-x)+(T^2(x)-T(x))
+>2\eps\ge\frac13,
+\]
+contradicting the assumption. The decreasing case is identical. Hence
+\begin{equation}\label{eq:alternation}
+T(R)=L,\qquad T(L)=R.
+\end{equation}
+
+Next we show that in the physical order there cannot be adjacent points
+\[
+y<z,
+\qquad y\in L,
+\qquad z\in R.
+\]
+Let
+\[
+p=T^{-1}(y).
+\]
+By the alternation in \eqref{eq:alternation}, $p\in R$, so
+\[
+y-p>\eps.
+\]
+Since $z$ is the right neighbor of $y=T(p)$, the move
+\[
+p\longrightarrow z
+\]
+is permissible. Then take the exact move $z\to T(z)$. Because $z\in R$,
+\[
+T(z)-z>\eps.
+\]
+Therefore
+\[
+T(z)-p
+=
+(y-p)+(z-y)+(T(z)-z)
+>2\eps+(z-y)
+>\frac13,
+\]
+again a contradiction.
+
+Hence no physical adjacency of type $L|R$ occurs. Since $0\in R$ and $1\in L$, the entire physical type word must have the form
+\begin{equation}\label{eq:typeword}
+R\,R\,\cdots\,R\,L\,L\,\cdots\,L.
+\end{equation}
+
+Now $T(0)\in L$ by alternation, and absence of one-step escape gives
+\[
+T(0)<\frac13.
+\]
+By \eqref{eq:typeword}, every $R$-point lies to the left of every $L$-point, so every $R$-point is less than $1/3$. On the other hand $T(1)\in R$, while one-step nonescape from $1$ gives
+\[
+T(1)>\frac23.
+\]
+This contradicts the preceding conclusion that every $R$-point is below $1/3$.
+\end{proof}
+
+The lower and upper bounds combine immediately.
+
+\begin{theorem}[Exact permutation threshold for Problem 164]\label{thm:exact-threshold}
+For the permutation variant with escape radius $1/3$, the exact critical value is
+\[
+\boxed{\eps_*=\frac16.}
+\]
+More precisely:
+\[
+\begin{cases}
+0<\eps<1/6:&\text{the minimum escape time over all starts can be arbitrarily large};\\
+\eps\ge1/6:&\text{some start escapes in at most two steps}.
+\end{cases}
+\]
+\end{theorem}
+
+\begin{proof}
+The first statement is \cref{thm:perm-lower}; the second is \cref{thm:two-step}.
+\end{proof}
+
+\subsection{The two-step bound cannot be replaced uniformly by one step}
+
+The upper bound in \cref{thm:two-step} is sharp at the level of step count.
+
+\begin{example}\label{ex:two-steps-sharp}
+Let
+\[
+E=\{0,.25,.29,.48,.52,.77,.78,1\},
+\qquad \eps=\frac15,
+\]
+and define the permutation
+\[
+\begin{aligned}
+0&\mapsto .25,& .25&\mapsto .48,& .29&\mapsto0,& .48&\mapsto .77,\\
+.52&\mapsto .29,& .77&\mapsto .52,& .78&\mapsto1,& 1&\mapsto .78.
+\end{aligned}
+\]
+Every $T$-edge has length greater than $.2$. A direct inspection of $T(x)$ and its ordered neighbors shows that no permissible one-step move has displacement $1/3$ from its starting point. However
+\[
+0\to .25\to .48
+\]
+is an exact two-step path whose total displacement is $.48>1/3$.
+\end{example}
+
+\section{A parameterized escape radius}
+
+The preceding argument extends naturally when the escape radius $1/3$ is replaced by $\rho$.
+
+\begin{definition}[Critical permutation threshold]\label{def:epsstar}
+For $0<\rho<1$, let $\eps_*(\rho)$ be the supremum of the numbers $\eps$ for which, at that fixed $\eps$, permutation systems can have arbitrarily large minimum escape time at radius $\rho$.
+\end{definition}
+
+We record only the part of the general theory that is completely closed and independent of the unresolved nonresonant cases.
+
+\begin{theorem}[General two-step upper bound]\label{thm:rho-upper}
+Let $0<\rho\le1/2$. If
+\[
+\eps\ge\frac\rho2,
+\]
+then every permutation system has a starting point that escapes radius $\rho$ in at most two permissible steps. Consequently
+\[
+\boxed{\eps_*(\rho)\le\frac\rho2.}
+\]
+\end{theorem}
+
+\begin{proof}
+Repeat the proof of \cref{thm:two-step}, replacing $1/3$ by $\rho$. Two consecutive exact jumps in the same direction have total displacement greater than $2\eps\ge\rho$, so directions alternate. If adjacent physical points have type $L|R$, the two-step portal path has displacement greater than $2\eps$ plus a positive gap, hence greater than $\rho$. Thus the physical type word is all $R$ followed by all $L$.
+
+Now $T(0)\in L$ and one-step nonescape gives $T(0)<\rho$, so all $R$-points lie below $\rho$. But $T(1)\in R$ and one-step nonescape gives
+\[
+T(1)>1-\rho\ge\rho,
+\]
+using $\rho\le1/2$. This is impossible.
+\end{proof}
+
+\subsection{Resonant radii}
+
+At the radii $\rho=2/q$, the block construction exactly matches the upper bound.
+
+\begin{theorem}[Exact resonant family]\label{thm:resonant}
+For every integer $q\ge4$,
+\[
+\boxed{
+\eps_*\!\left(\frac2q\right)=\frac1q.
+}
+\]
+\end{theorem}
+
+\begin{proof}
+The upper bound is \cref{thm:rho-upper}.
+
+For the lower bound, fix
+\[
+0<\eps<\frac1q
+\]
+and choose
+\[
+\eps<D<\frac1q.
+\]
+Place $q$ slow macroblocks of width $D$ in $[0,1]$, with the $q-1$ intervening gaps all equal to
+\[
+h=\frac{1-qD}{q-1}.
+\]
+Then
+\[
+2D+h
+=
+\frac{1+(q-2)D}{q-1}
+<\frac2q=\rho.
+\]
+Thus a starting point is $\rho$-close to every point in its own macroblock and in either adjacent macroblock. Any $\rho$-escape must therefore reach beyond an adjacent macroblock and hence completely traverse an intervening slow block. By increasing its level parameter $M$, the required number of permissible steps becomes arbitrarily large uniformly over all starting points.
+\end{proof}
+
+For example, \cref{thm:resonant} gives the exact thresholds at
+\[
+\rho=\frac12,\frac25,\frac13,\frac27,\frac14,\ldots.
+\]
+The case $\rho=1/3$ is precisely \cref{thm:exact-threshold}.
+
+\section{Summary and scope}
+
+The conclusions relevant to Scottish Book Problem 164 are as follows.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.31\textwidth} >{\raggedright\arraybackslash}p{0.58\textwidth}}
+\toprule
+Setting & Exact conclusion \\
+\midrule
+Arbitrary $T:E\to E$, radius $1/3$ & For every $0<\eps<1/3$ there is a six-point all-start permanent trap; for $\eps\ge1/3$ every point escapes in one step. \\
+Permutation $T$, radius $1/3$ & Sharp threshold $\eps_*=1/6$: below it the all-start escape time is unbounded; at and above it some point escapes in at most two steps. \\
+Permutation $T$, radius $\rho\le1/2$ & General upper bound $\eps_*(\rho)\le\rho/2$. \\
+Resonant radii $\rho=2/q$, $q\ge4$ & Exact value $\eps_*(2/q)=1/q$. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The nonresonant parameterized problem is a further strengthening and is deliberately not needed for the solution of Problem 164 itself. In particular, the unresolved analysis of the first nonresonant test radius $\rho=3/8$ is logically separate from the complete results proved in this note.
+
+
+\section*{Acknowledgments}
+Chuyang Chen and Chenhao Bian are grateful to their advisor, Fei Yu, for his guidance on this project.
+
+\section*{Independent review and Lean verification notice}
+\begingroup
+\small
+\begin{center}
+\begin{minipage}{0.94\linewidth}
+\centering
+\textbf{\large No independent human mathematical review has been performed.}
+\end{minipage}
+\end{center}
+
+\medskip
+\noindent The accompanying Lean file compiles under Lean 4.33.1 / Mathlib version v4.33.1 (exact mathlib revision \texttt{0df444a360eaa60ab8c11dca51a86af692955474}).
+
+\medskip
+\noindent The accompanying Lean file formalizes the literal phase diagram, the permutation threshold, and the lower/upper statements identified in the formal verification record below.
+
+\medskip
+\noindent\textbf{Successful Lean verification establishes correctness of the formalized statement relative to its assumptions. It does not by itself establish that the formalized statement is exactly equivalent to the historical problem as originally formulated.}
+\endgroup
+
+\section*{Provenance and contacts}
+\begingroup\small\sloppy
+\begin{description}
+\item[Project curator.] Fei Yu.
+\item[AI-generation coordinators and contacts.] Chuyang Chen (\href{mailto:22535018@zju.edu.cn}{22535018@zju.edu.cn}); Chenhao Bian (\href{mailto:bch26@mails.tsinghua.edu.cn}{bch26@mails.tsinghua.edu.cn}).
+\item[Mathematical draft generation.] Mathematical drafts were generated with GPT-5.6 Sol under their supervision.
+\item[Lean code generation.] The accompanying Lean source was generated and revised with GPT-5.6 Sol under their supervision. This is a code-generation provenance statement and is separate from mathematical review.
+\item[Lean build/kernel execution.] The local build and kernel-check commands reported below were executed by Chuyang Chen in the recorded project environment.
+\item[Human mathematical verification.] NONE.
+\item[Statement-correspondence audit.] NONE. No independent human audit has certified that the natural-language statement and the formal Lean statement are exactly equivalent.
+\end{description}
+\medskip
+\noindent Comments, corrections, historical references, and independent verification are very welcome. For long-term correspondence, readers are encouraged to use the repository issue tracker as well as the contacts above.
+\endgroup
+
+\section*{Lean formal verification record}
+
+\begingroup\small\sloppy
+This record separates the natural-language statement, the formal Lean statement, kernel checking of the proof term, and the separate audit of the correspondence between the first two. Kernel acceptance is not treated as human verification of the original problem.
+
+\begin{description}
+\item[Formalization status.] F1.
+\item[Lean source.] \texttt{\detokenize{PaperFormalization/Ulam 164/Main.lean}}.
+\item[Principal formal theorems.] \mbox{}\\
+\texttt{\detokenize{Scottish164.problem164_permutation_exact_threshold}}\\
+\texttt{\detokenize{Scottish164.resonant_exact_threshold}}\\
+\texttt{\detokenize{Scottish164.literal_exact_phase_diagram}}\\
+\texttt{\detokenize{Scottish164.problem164_two_step_upper}}\\
+\texttt{\detokenize{Scottish164.LowerRealization.resonant_lower_article_model}}.
+\item[Build command.] \texttt{\detokenize{lake env lean "PaperFormalization/Ulam 164/Main.lean"}}.
+\item[Build/kernel result.] PASS.
+\item[Lean version.] Lean 4.33.1 (commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6).
+\item[Library snapshot.] mathlib v4.33.1, exact revision 0df444a360eaa60ab8c11dca51a86af692955474.
+\item[Project commit.] PENDING -- the final verified working tree has not yet been committed.
+\item[Kernel axiom audit.] Each audited principal theorem depends on \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}. No user-defined mathematical axiom occurs in these dependency audits.
+\item[Scope note.] The integrated file formalizes the literal phase diagram, the sharp permutation threshold at $1/6$, the two-step upper bound, and the resonant-radius lower family used in the article.
+\end{description}
+
+\noindent\textbf{Interpretation of the label.} F1 records the specified formal statements accepted by the Lean kernel in the stated environment. F2 would additionally require a human statement-correspondence audit.
+\endgroup
+
+\begin{thebibliography}{9}
+\bibitem{ScottishBook2}
+R. D. Mauldin, ed.,
+\emph{The Scottish Book: Mathematics from the Scottish Caf\'e, with Selected Problems from The New Scottish Book},
+2nd ed., Birkh\"auser/Springer, 2015, p.~262.
+\newblock DOI: \href{https://doi.org/10.1007/978-3-319-22897-6}{10.1007/978-3-319-22897-6}.
+\end{thebibliography}
+
+\end{document}

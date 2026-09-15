@@ -1,0 +1,389 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage[margin=1.08in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Ball}{[-1,1]}
+\newcommand{\Lip}{\operatorname{Lip}}
+\newcommand{\eR}{\overline{\mathbb R}_{\ge 0}}
+
+\title[Ulam 165 on the closed unit interval]{A Closed-Ball Counterexample to Ulam's Greedy Bi-Lipschitz Problem 165}
+\author{}
+\date{September 13, 2026}
+
+\subjclass[2020]{Primary 54E40; Secondary 26A16, 51M05, 03B35}
+\keywords{Scottish Book, Ulam problem, Lipschitz map, greedy algorithm, closed ball}
+
+\newcommand{\publicationstatus}{%
+\begin{center}
+\fbox{\begin{minipage}{0.92\linewidth}
+\small
+\textbf{AI EXPLORATORY MATHEMATICAL NOTE}\\[2pt]
+\textbf{Status:} E1 - AI cross-checked; \textbf{NO INDEPENDENT HUMAN REVIEW}\\
+\textbf{Version:} v1.0\\
+\textbf{First public release:} PENDING\\
+\textbf{Related Lean formalization:} the one-dimensional closed-ball formulation used here has been kernel-checked in Lean; see the end matter for the exact scope.\\
+\end{minipage}}
+\end{center}
+\medskip
+}
+
+\hypersetup{pdfauthor={}}
+
+\begin{document}
+
+\begin{abstract}
+Ulam's Problem 165 asks for bounded greedy bi-Lipschitz cost under its historical geometric hypotheses. Under the historically natural closed-ball interpretation, we construct a one-dimensional counterexample.
+\end{abstract}
+
+\begin{quote}
+\small
+\textbf{Feedback.} This note has not undergone independent human mathematical review. Readers who know relevant prior literature, identify an error, or wish to check the argument are especially encouraged to contact the coordinators listed at the end of the paper or to open an issue in the repository.
+\end{quote}
+
+
+\section{The closed-ball formulation of Problem 165}
+
+Problem 165 of the Scottish Book asks whether a greedy extension procedure for a finite one-to-one assignment of rational points in a unit sphere must keep the sum of the Lipschitz constants of the map and its inverse bounded; see \cite{Ulam1977,Mauldin2015}.  The historical terminology ``sphere'' is not identical to modern usage in every source.  In this note we isolate the closed-ball interpretation and show that its boundedness assertion is false already for the one-dimensional closed unit ball
+\[
+B^1=\Ball\subset\R.
+\]
+Thus no high-dimensional topological theorem is needed.
+
+Let $p_0,p_1,p_2,\dots$ be a sequence of pairwise distinct rational points whose range is all of $\Q\cap[-1,1]$, with
+\[
+p_0=0,\qquad p_1=1.
+\]
+For an injective finite target list $q_0,\dots,q_{n-1}\in[-1,1]$, define
+\[
+ L_n=\max_{0\le i,j<n}\frac{|q_i-q_j|}{|p_i-p_j|},\qquad
+ L_n'=\max_{0\le i,j<n}\frac{|p_i-p_j|}{|q_i-q_j|}.
+\]
+On the diagonal the ratio is interpreted as $0$.  When two distinct source points have the same image, the corresponding inverse ratio is interpreted as $+\infty$.  Thus it is convenient to regard the objective
+\[
+C_n=L_n+L_n'
+\]
+as taking values in the extended nonnegative reals $\eR=[0,\infty]$.
+
+We prescribe the initial assignment
+\[
+q_0=1,\qquad q_1=0.
+\]
+At every later stage, among all $y\in[-1,1]$, choose $q_n=y$ minimizing the exact extended-real cost of the enlarged finite assignment.  A collision automatically has infinite inverse cost, so a finite minimizer is necessarily fresh.
+
+Our main statement is the following.
+
+\begin{theorem}\label{thm:main}
+There exist pairwise distinct sequences
+\[
+(p_n)_{n\ge0},\ (q_n)_{n\ge0}\subset[-1,1]
+\]
+with the following properties.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Every $p_n$ is rational, and $\{p_n:n\ge0\}$ is dense in $[-1,1]$.
+\item $p_0=0$, $p_1=1$, $q_0=1$, and $q_1=0$.
+\item For every $n\ge2$, the point $q_n$ is a global minimizer of Ulam's finite objective among all possible new target points in $[-1,1]$.
+\item The target sequence is injective.
+\item The finite greedy costs are unbounded: for every $K<\infty$ there exists a finite stage with $C_n>K$.
+\end{enumerate}
+Consequently, the closed-ball interpretation of Ulam's boundedness assertion admits a counterexample already in dimension one.
+\end{theorem}
+
+The rest of the paper follows the formal proof structure exactly.
+
+\section{A dense rational source sequence}
+
+Set
+\[
+R=[-1,1]\cap\Q.
+\]
+Remove the two distinguished points $0$ and $1$, enumerate the remaining countable infinite set, and place $0,1$ first.  This gives a bijection
+\[
+\mathbb N\longrightarrow R,
+\qquad n\longmapsto p_n,
+\]
+with $p_0=0$ and $p_1=1$.
+
+\begin{lemma}\label{lem:source}
+The sequence $(p_n)$ is injective, every $p_n$ is rational, and its range is dense in $[-1,1]$.
+\end{lemma}
+
+\begin{proof}
+Injectivity and rationality are immediate from the enumeration.  For density, rational numbers are dense in $\R$.  Clamping a real number to $[-1,1]$ is continuous and surjective onto $[-1,1]$; clamping rational numbers gives rational points of $[-1,1]$.  Hence $R$ is dense in $[-1,1]$, and the enumeration has dense range.
+\end{proof}
+
+
+\section{The exact finite objective and existence of greedy minimizers}
+
+For a finite source map $p:\{0,\dots,n-1\}\to[-1,1]$ and target map $q$ define the extended-real records
+\[
+ A(p,q)=\max_{i,j}\frac{d(q_i,q_j)}{d(p_i,p_j)},\qquad
+ B(p,q)=\max_{i,j}\frac{d(p_i,p_j)}{d(q_i,q_j)},
+\]
+and
+\[
+ C(p,q)=A(p,q)+B(p,q)\in\eR.
+\]
+If $p$ and $q$ are injective, then $C(p,q)<\infty$.
+
+Suppose $q_0,\dots,q_{n-1}$ is already injective.  For $y\in[-1,1]$, let
+\[
+\Phi_n(y)=C\bigl((p_0,\dots,p_n),(q_0,\dots,q_{n-1},y)\bigr).
+\]
+
+\begin{lemma}\label{lem:continuity}
+The function $\Phi_n:[-1,1]\to\eR$ is continuous.
+\end{lemma}
+
+\begin{proof}
+Each of the finitely many forward ratios is a continuous function of $y$.  Each inverse ratio is also continuous as an $\eR$-valued function: when a denominator tends to zero while the corresponding source distance is nonzero, the ratio tends to $+\infty$, exactly matching extended-real division.  Finite maxima and sums preserve continuity.
+\end{proof}
+
+\begin{lemma}\label{lem:collision}
+If $y=q_i$ for some old target, then $\Phi_n(y)=+\infty$.  If $y$ is distinct from every old target, then $\Phi_n(y)<+\infty$.
+\end{lemma}
+
+\begin{proof}
+In the collision case, $p_n\ne p_i$ because the source sequence is injective, whereas the target distance between $y$ and $q_i$ is zero.  The corresponding inverse ratio is therefore $+\infty$.  In the fresh case both the enlarged source list and enlarged target list are injective, so every ratio is finite and hence so is the finite maximum and its sum.
+\end{proof}
+
+\begin{proposition}\label{prop:minimizer}
+At every finite injective stage there exists a fresh point $y\in[-1,1]$ that globally minimizes $\Phi_n$.
+\end{proposition}
+
+\begin{proof}
+The compact interval $[-1,1]$ is nonempty, and by Lemma~\ref{lem:continuity} the function $\Phi_n$ is continuous.  Therefore $\Phi_n$ attains a global minimum.  Since only finitely many target points have already been used, there is some fresh $z\in[-1,1]$; by Lemma~\ref{lem:collision}, $\Phi_n(z)<\infty$.  Hence a minimizing point cannot be one of the old targets, because every collision has cost $+\infty$.  Thus a fresh global minimizer exists.
+\end{proof}
+
+
+\section{The infinite greedy run}
+
+Start with
+\[
+q_0=1,\qquad q_1=0.
+\]
+Using Proposition~\ref{prop:minimizer}, choose recursively a global minimizer at each later stage.  Since each minimizer is fresh, the target sequence remains injective.
+
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item all target values are distinct;
+\item every post-initial value is an actual global minimizer of the exact finite objective.
+\end{enumerate}
+
+
+\section{A uniform bound would produce a bi-Lipschitz dense-set map}
+
+Assume for contradiction that there is a finite $K\ge0$ such that
+\[
+C_k\le K\qquad\text{for every }k.
+\]
+Every pair of indices eventually appears together in one finite stage.  Since the forward and inverse records are each bounded by the total cost, for all $i,j$ we obtain
+\begin{align}
+ |q_i-q_j|&\le K|p_i-p_j|,\label{eq:fwd}\\
+ |p_i-p_j|&\le K|q_i-q_j|.\label{eq:inv}
+\end{align}
+Thus the map
+\[
+f(p_i)=q_i
+\]
+on the dense set $D=\{p_i:i\ge0\}$ is $K$-Lipschitz and satisfies the reverse Lipschitz inequality with the same constant.
+
+
+\section{Extension to the whole interval}
+
+Let $f_\R:D\to\R$ be the real coordinate of $f$.  From \eqref{eq:fwd}, $f_\R$ is $K$-Lipschitz.  The real-valued Lipschitz extension theorem therefore gives a $K$-Lipschitz function
+\[
+g:[-1,1]\longrightarrow\R
+\]
+agreeing with $f_\R$ on $D$.
+
+Because $D$ is dense, $g$ is continuous, and $g(D)\subset[-1,1]$, closedness of $[-1,1]$ implies
+\[
+g([-1,1])\subset[-1,1].
+\]
+
+The reverse inequality also passes from $D\times D$ to all of $[-1,1]^2$.  Indeed, the set
+\[
+\mathcal R=\{(x,y): |x-y|\le K|g(x)-g(y)|\}
+\]
+is closed, and it contains the dense set $D\times D$ by \eqref{eq:inv}.  Hence
+\[
+|x-y|\le K|g(x)-g(y)|\qquad(x,y\in[-1,1]).
+\]
+If $g(x)=g(y)$, this inequality gives $|x-y|=0$, so $g$ is injective.
+
+Finally, agreement with the initial assignment yields
+\[
+g(0)=1,\qquad g(1)=0.
+\]
+
+The formal proof uses \texttt{LipschitzOnWith.extend\_real} for the forward extension.  It proves range preservation by closedness and density, extends the reverse inequality by closedness on the product, and derives injectivity.  All of this is contained in \texttt{no\_uniform\_stage\_bound}.
+
+\section{The one-dimensional obstruction}
+
+\begin{lemma}\label{lem:interval}
+There is no continuous injective map
+\[
+g:[-1,1]\to[-1,1]
+\]
+with $g(0)=1$ and $g(1)=0$.
+\end{lemma}
+
+\begin{proof}
+A continuous injective real-valued map on an interval is either strictly increasing or strictly decreasing.
+
+If $g$ is strictly increasing, then $0<1$ gives
+\[
+g(0)<g(1),
+\]
+contradicting $g(0)=1$ and $g(1)=0$.
+
+If $g$ is strictly decreasing, then $-1<0$ gives
+\[
+g(-1)>g(0)=1,
+\]
+contradicting $g(-1)\in[-1,1]$.
+\end{proof}
+
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Lemma~\ref{lem:source} constructs the required dense rational injective source sequence.  Proposition~\ref{prop:minimizer} recursively constructs an infinite injective greedy target sequence beginning with $0\mapsto1$ and $1\mapsto0$.  If its finite costs were bounded by some finite $K$, Sections~5--6 would produce a continuous injective self-map of $[-1,1]$ with these same initial values, contradicting Lemma~\ref{lem:interval}.  Therefore no finite uniform bound exists.
+\end{proof}
+
+
+\section*{Acknowledgments}
+Chuyang Chen and Chenhao Bian are grateful to their advisor, Fei Yu, for his guidance on this project.
+
+\section*{Independent review and Lean verification notice}
+\begingroup
+\small
+\begin{center}
+\begin{minipage}{0.94\linewidth}
+\centering
+\textbf{\large No independent human mathematical review has been performed.}
+\end{minipage}
+\end{center}
+
+\medskip
+\noindent The accompanying Lean file compiles under Lean 4.33.1 / Mathlib version v4.33.1 (exact mathlib revision \texttt{0df444a360eaa60ab8c11dca51a86af692955474}).
+
+\medskip
+\noindent The accompanying Lean file formalizes the one-dimensional historical closed-ball formulation used in this note.
+
+\medskip
+\noindent\textbf{Successful Lean verification establishes correctness of the formalized statement relative to its assumptions. It does not by itself establish that the formalized statement is exactly equivalent to the historical problem as originally formulated.}
+\endgroup
+
+\section*{Provenance and contacts}
+\begingroup\small\sloppy
+\begin{description}
+\item[Project curator.] Fei Yu.
+\item[AI-generation coordinators and contacts.] Chuyang Chen (\href{mailto:22535018@zju.edu.cn}{22535018@zju.edu.cn}); Chenhao Bian (\href{mailto:bch26@mails.tsinghua.edu.cn}{bch26@mails.tsinghua.edu.cn}).
+\item[Mathematical draft generation.] Mathematical drafts were generated with GPT-5.6 Sol under their supervision.
+\item[Lean code generation.] The accompanying Lean source was generated and revised with GPT-5.6 Sol under their supervision. This is a code-generation provenance statement and is separate from mathematical review.
+\item[Lean build/kernel execution.] The local build and kernel-check commands reported below were executed by Chuyang Chen in the recorded project environment.
+\item[Human mathematical verification.] NONE.
+\item[Statement-correspondence audit.] NONE. No independent human audit has certified that the natural-language statement and the formal Lean statement are exactly equivalent.
+\end{description}
+\medskip
+\noindent Comments, corrections, historical references, and independent verification are very welcome. For long-term correspondence, readers are encouraged to use the repository issue tracker as well as the contacts above.
+\endgroup
+
+\section*{Lean formal verification record}
+
+\begingroup\small\sloppy
+This record separates the natural-language statement, the formal Lean statement, kernel checking of the proof term, and the separate audit of the correspondence between the first two. Kernel acceptance is not treated as human verification of the original problem.
+
+\begin{description}
+\item[Formalization status.] F1.
+\item[Lean source.] \texttt{\detokenize{PaperFormalization/Ulam 165/Main.lean}}.
+\item[Principal formal theorems.] \mbox{}\\
+\texttt{\detokenize{Ulam165HistoricalBall.historical_closed_ball_problem165_negative}}\\
+\texttt{\detokenize{Ulam165HistoricalBall.exists_historical_closed_ball_counterexample}}.
+\item[Build command.] \texttt{\detokenize{lake env lean "PaperFormalization/Ulam 165/Main.lean"}}.
+\item[Build/kernel result.] PASS.
+\item[Lean version.] Lean 4.33.1 (commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6).
+\item[Library snapshot.] mathlib v4.33.1, exact revision 0df444a360eaa60ab8c11dca51a86af692955474.
+\item[Project commit.] PENDING -- the final verified working tree has not yet been committed.
+\item[Kernel axiom audit.] Both audited principal theorems depend on \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}. No user-defined mathematical axiom occurs in these dependency audits.
+\item[Scope note.] This formalization treats the one-dimensional historical closed-ball formulation used in the present paper, including dense rational source data, existence of greedy minimizers, injectivity, and unbounded greedy cost.
+\end{description}
+
+\noindent\textbf{Interpretation of the label.} F1 records the specified formal statements accepted by the Lean kernel in the stated environment. F2 would additionally require a human statement-correspondence audit.
+\endgroup
+
+\section{Lean correspondence}
+
+The accompanying single Lean file is organized to mirror the proof above.  The main correspondences are:
+\begin{center}
+\small
+\begin{tabular}{ll}
+\hline
+mathematical object or statement & Lean identifier\\
+\hline
+$[-1,1]$ & \texttt{Ball1}\\
+$[-1,1]\cap\Q$ & \texttt{RatBall1}\\
+$(p_n)$ & \texttt{source}\\
+source injective & \texttt{source\_injective}\\
+source rational & \texttt{source\_rational}\\
+source dense & \texttt{source\_denseRange}\\
+$L_n$ & \texttt{forwardCost}\\
+$L_n'$ & \texttt{inverseCost}\\
+$L_n+L_n'$ & \texttt{biCost}\\
+$\Phi_n(y)$ & \texttt{candidateCost}\\
+global greedy choice & \texttt{IsGreedyChoice}\\
+existence of a fresh minimizer & \texttt{exists\_greedyChoice}\\
+$(q_n)$ & \texttt{runTarget}\\
+target injective & \texttt{runTarget\_injective}\\
+every step greedy & \texttt{runTarget\_greedy}\\
+$C_k$ & \texttt{stageCost}\\
+unboundedness & \texttt{historical\_closed\_ball\_problem165\_negative}\\
+\hline
+\end{tabular}
+\end{center}
+
+The final packaged object is \texttt{HistoricalClosedBallCounterexample}, and its existence theorem is
+\[
+\texttt{exists\_historical\_closed\_ball\_counterexample}.
+\]
+The file ends with \texttt{\#print axioms} commands for both final theorems.  It contains no \texttt{sorry}, \texttt{admit}, or user-defined mathematical axiom.  A successful Lean/Mathlib compilation therefore turns the source-level formalization into a kernel-checked verification of Theorem~\ref{thm:main}.
+
+\begin{remark}
+Only dimension one is used here.  That is sufficient to refute a universal boundedness assertion for closed Euclidean balls.  In particular, this proof deliberately avoids introducing a high-dimensional invariance-of-domain theorem as an additional formalization dependency.
+\end{remark}
+
+\begin{remark}
+This article addresses the closed-ball interpretation of the historical phrase ``unit sphere''.  A separate construction treats the modern boundary-sphere interpretation with chordal distance.  Combining the two results removes the principal mathematical ambiguity between those two Euclidean readings, while the philological question of which convention Ulam personally intended is logically separate.
+\end{remark}
+
+\begin{thebibliography}{9}
+
+\bibitem{Mauldin2015}
+R. D. Mauldin (ed.),
+\emph{The Scottish Book: Mathematics from the Scottish Cafe, with Selected Problems from the New Scottish Book},
+2nd updated and enlarged ed., Birkh\"auser/Springer, Cham, 2015.
+
+\bibitem{Ulam1977}
+S. M. Ulam,
+\emph{The Scottish Book},
+Los Alamos Scientific Laboratory Monograph LA-6832, June 1977.
+
+\end{thebibliography}
+
+\end{document}

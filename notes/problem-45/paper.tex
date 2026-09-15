@@ -1,0 +1,463 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Ftwo}{\mathbb F_2}
+\newcommand{\R}{\mathbb R}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\id}{\mathrm{id}}
+
+\title{A Counterexample to Scottish Book Problem 45}
+\author{}
+\date{September 2026}
+
+\newcommand{\publicationstatus}{%
+\begin{center}
+\fbox{\begin{minipage}{0.92\linewidth}
+\small
+\textbf{AI EXPLORATORY MATHEMATICAL NOTE}\\[2pt]
+\textbf{Status:} E1 - AI cross-checked; \textbf{NO INDEPENDENT HUMAN REVIEW}\\
+\textbf{Version:} v1.0\\
+\textbf{First public release:} PENDING\\
+\textbf{Related Lean formalization:} a distinct counterexample to Problem 45 has been kernel-checked in Lean. The analytic Hilbert-space presentation in this note is not the construction formalized there; see the end matter for the exact scope.\\
+\end{minipage}}
+\end{center}
+\medskip
+}
+
+\hypersetup{pdfauthor={}}
+
+\begin{document}
+\maketitle
+
+\publicationstatus
+
+\begin{abstract}
+Scottish Book Problem 45, posed by Banach in 1935, asks whether the pointwise product of finitely many multiplicative operations on a complete non-Abelian metric group must be continuous whenever that product belongs to a Baire class. We construct an explicit counterexample.
+\end{abstract}
+
+\begin{quote}
+\small
+\textbf{Feedback.} This note has not undergone independent human mathematical review. Readers who know relevant prior literature, identify an error, or wish to check the argument are especially encouraged to contact the coordinators listed at the end of the paper or to open an issue in the repository.
+\end{quote}
+
+
+\section{The problem}
+
+Banach's Problem 45 in \emph{The Scottish Book} asks whether the following assertion is true \cite[Problem 45]{ScottishBook}:
+
+\begin{quote}
+Let $G$ be a complete non-Abelian metric group and let $U_1,\dots,U_n:G\to G$ be multiplicative operations. If
+\[
+U(x)=U_1(x)\cdots U_n(x)
+\]
+is of a Baire class, must $U$ be continuous?
+\end{quote}
+
+Here a multiplicative operation is a group homomorphism. The original entry notes that the assertion is true for $n=2$. Plichko and Zagorodnyuk revisited Problem 45 in 1998 and wrote that they did not know its general answer \cite{PZ1998}. The purpose of this note is only to present a self-contained counterexample; no claim of historical priority is made.
+
+\begin{theorem}\label{thm:main}
+There exist a complete non-Abelian metrizable group $G$ and four group endomorphisms
+\[
+U_1,U_2,U_3,U_4:G\longrightarrow G
+\]
+such that their pointwise product
+\[
+F(g)=U_1(g)U_2(g)U_3(g)U_4(g)
+\]
+is of Baire class $1$ but is not continuous. Consequently, the assertion in Scottish Book Problem 45 is false.
+\end{theorem}
+
+\section{The auxiliary groups}
+
+Let
+\[
+V=\Ftwo^{\mathbb N}
+\]
+with its usual product topology and coordinatewise addition. Thus $V$ is a compact metrizable Boolean group. We use the standard complete metric
+\[
+d_V(x,y)=\sum_{j=1}^{\infty}2^{-j}|x_j-y_j|.
+\]
+Let $D$ be the same abstract group equipped with the discrete topology and the discrete metric
+\[
+d_D(x,y)=\mathbf 1_{x\ne y}.
+\]
+Since $V$ is uncountable, $D$ is an uncountable discrete complete metric group.
+
+Let
+\[
+\cH=\ell^2(D;\R)
+\]
+with orthonormal basis $(\delta_y)_{y\in D}$. For $x\in D$, let $\lambda_x$ denote the left regular orthogonal operator
+\[
+\lambda_x\delta_y=\delta_{x+y}.
+\]
+Because every element of $D$ has order two,
+\[
+\lambda_x^2=I.
+\]
+Fix $\xi=\delta_0$ and set
+\[
+b_x=\lambda_x\xi-\xi=\delta_x-\delta_0.
+\]
+Then
+\begin{equation}\label{eq:bnorm}
+b_0=0,
+\qquad
+\|b_x\|^2=2\quad(x\ne0).
+\end{equation}
+
+Now put
+\[
+W=\cH\oplus\cH
+\]
+and define the continuous alternating bilinear form
+\[
+\omega\bigl((u_1,u_2),(v_1,v_2)\bigr)
+=
+\langle u_1,v_2\rangle-\langle u_2,v_1\rangle.
+\]
+Let
+\[
+N=W\times\R
+\]
+with the Heisenberg multiplication
+\begin{equation}\label{eq:heis}
+(w,t)(w',t')
+=
+\left(w+w',\ t+t'+\frac12\omega(w,w')\right).
+\end{equation}
+Its identity is $(0,0)$ and $(w,t)^{-1}=(-w,-t)$. Give $N$ the complete product metric
+\[
+d_N\bigl((w,t),(w',t')\bigr)=\|w-w'\|+|t-t'|.
+\]
+The group operations are continuous for the resulting topology, so $N$ is a complete metrizable topological group. It is non-Abelian.
+
+For $x\in D$ define
+\[
+J_x=\lambda_x\oplus\lambda_x.
+\]
+Since $J_x$ preserves $\omega$, the map
+\[
+\alpha_x(w,t)=(J_xw,t)
+\]
+is an automorphism of $N$. Because $D$ is discrete, the action $D\curvearrowright N$ is continuous. Form
+\[
+K=N\rtimes_{\alpha}D,
+\]
+with multiplication
+\begin{equation}\label{eq:semi}
+(n,x)(n',y)=\bigl(n\alpha_x(n'),x+y\bigr).
+\end{equation}
+As a topological space, $K=N\times D$. In particular,
+\[
+d_K\bigl((n,x),(n',y)\bigr)=d_N(n,n')+\mathbf 1_{x\ne y}
+\]
+is a complete compatible metric. Thus $K$ is a complete non-Abelian metrizable group.
+
+\section{Four homomorphisms}
+
+Identify the abstract groups $V$ and $D$ and define
+\[
+R:V\longrightarrow K,
+\qquad
+R(x)=(e_N,x).
+\]
+This is a group homomorphism; no continuity is asserted or needed.
+
+For $w\in W$, put
+\[
+\nu_w=(w,0)\in N,
+\qquad
+\widehat\nu_w=(\nu_w,0_D)\in K,
+\]
+and define
+\begin{equation}\label{eq:Aw}
+A_w(x)=\widehat\nu_w^{-1}R(x)\widehat\nu_w.
+\end{equation}
+Each $A_w:V\to K$ is a group homomorphism. Write
+\[
+A_w(x)=(c_w(x),x),
+\qquad c_w(x)\in N.
+\]
+From \eqref{eq:semi},
+\begin{equation}\label{eq:cw}
+c_w(x)=\nu_w^{-1}\alpha_x(\nu_w).
+\end{equation}
+Because $A_w(x)^2=e_K$, we also have
+\begin{equation}\label{eq:alphac}
+\alpha_x(c_w(x))=c_w(x)^{-1}.
+\end{equation}
+Finally, using \eqref{eq:heis},
+\begin{equation}\label{eq:cwexplicit}
+c_w(x)
+=
+\left(J_xw-w,\ -\frac12\omega(w,J_xw)\right).
+\end{equation}
+
+Choose
+\[
+w_1=(\xi,0),
+\qquad
+w_2=0,
+\qquad
+w_3=(0,\xi),
+\qquad
+w_4=(\xi,\xi),
+\]
+and set
+\[
+A_i=A_{w_i}\qquad(1\le i\le4).
+\]
+Thus $A_2=R$.
+
+\begin{lemma}\label{lem:cvalues}
+For every $x\in V$,
+\[
+c_{w_1}(x)=((b_x,0),0),
+\qquad
+c_{w_3}(x)=((0,b_x),0),
+\qquad
+c_{w_4}(x)=((b_x,b_x),0).
+\]
+\end{lemma}
+
+\begin{proof}
+The vector coordinates follow from $J_x\xi-\xi=b_x$. For $w_1$ and $w_3$, the central term in \eqref{eq:cwexplicit} is zero immediately. For $w_4$,
+\[
+\omega\bigl((\xi,\xi),(\lambda_x\xi,\lambda_x\xi)\bigr)
+=
+\langle\xi,\lambda_x\xi\rangle-
+\langle\xi,\lambda_x\xi\rangle
+=0.
+\]
+\end{proof}
+
+\begin{proposition}\label{prop:product}
+Let
+\[
+P(x)=A_1(x)A_2(x)A_3(x)A_4(x).
+\]
+Then
+\begin{equation}\label{eq:P}
+P(x)=\left((0_W,\tfrac12\|b_x\|^2),0_D\right)\in K.
+\end{equation}
+Consequently, if
+\[
+z=\left((0_W,1),0_D\right)\in K,
+\]
+then
+\begin{equation}\label{eq:twovalues}
+P(0)=e_K,
+\qquad
+P(x)=z\quad(x\ne0).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Because $c_{w_2}=e_N$, equations \eqref{eq:semi} and \eqref{eq:alphac} give
+\[
+A_1(x)A_2(x)=(c_{w_1}(x),0_D)
+\]
+and
+\[
+A_3(x)A_4(x)=
+(c_{w_3}(x)c_{w_4}(x)^{-1},0_D).
+\]
+Hence
+\begin{equation}\label{eq:Pc}
+P(x)=c_{w_1}(x)c_{w_3}(x)c_{w_4}(x)^{-1}.
+\end{equation}
+Let
+\[
+u=(b_x,0),
+\qquad
+v=(0,b_x)
+\]
+in $W$. By Lemma \ref{lem:cvalues}, the three factors in \eqref{eq:Pc} have vector parts
+\[
+u,\qquad v,\qquad -(u+v)
+\]
+and zero central coordinates. Their vector sum is zero. The first multiplication contributes
+\[
+\frac12\omega(u,v)=\frac12\langle b_x,b_x\rangle
+=\frac12\|b_x\|^2
+\]
+to the central coordinate. Multiplication by the third factor contributes
+\[
+\frac12\omega(u+v,-u-v)=0.
+\]
+This proves \eqref{eq:P}. Equation \eqref{eq:twovalues} follows from \eqref{eq:bnorm}.
+\end{proof}
+
+\section{Endomorphisms of one complete metric group}
+
+Set
+\[
+G=V\times K
+\]
+with the direct-product group structure and topology. The metric
+\[
+d_G\bigl((v,k),(v',k')\bigr)=d_V(v,v')+d_K(k,k')
+\]
+is compatible and complete. Thus $G$ is a complete non-Abelian metrizable group.
+
+For $i=1,2,3,4$, define
+\begin{equation}\label{eq:Ui}
+U_i:G\longrightarrow G,
+\qquad
+U_i(v,k)=(0_V,A_i(v)).
+\end{equation}
+
+\begin{lemma}\label{lem:Ui}
+Each $U_i$ is a group endomorphism of $G$.
+\end{lemma}
+
+\begin{proof}
+The projection $G\to V$, $(v,k)\mapsto v$, is a homomorphism, each $A_i:V\to K$ is a homomorphism, and the embedding $K\to G$, $k\mapsto(0_V,k)$, is a homomorphism. Their composition is $U_i$.
+\end{proof}
+
+Let
+\[
+F=U_1U_2U_3U_4
+\]
+be the pointwise product. Proposition \ref{prop:product} gives
+\begin{equation}\label{eq:F}
+F(v,k)=
+\begin{cases}
+e_G,&v=0,\\[2mm]
+(0_V,z),&v\ne0.
+\end{cases}
+\end{equation}
+
+\section{Baire class one and discontinuity}
+
+For $m\ge1$, define
+\[
+\theta_m(v)=\min\{1,m\,d_V(v,0)\}.
+\]
+Then $\theta_m:V\to[0,1]$ is continuous, $\theta_m(0)=0$, and
+\[
+\theta_m(v)\longrightarrow1
+\qquad(v\ne0).
+\]
+For $t\in\R$, let
+\[
+z_t=\left((0_W,t),0_D\right)\in K.
+\]
+The map $t\mapsto z_t$ is a continuous central one-parameter subgroup of $K$. Define
+\[
+F_m:G\longrightarrow G,
+\qquad
+F_m(v,k)=(0_V,z_{\theta_m(v)}).
+\]
+Each $F_m$ is continuous. By \eqref{eq:F},
+\[
+F_m(g)\longrightarrow F(g)
+\qquad(g\in G).
+\]
+Therefore $F$ is of Baire class $1$.
+
+To see that $F$ is not continuous, let $e_j\in V$ be the sequence with a single $1$ in the $j$-th coordinate and $0$ elsewhere. Then
+\[
+e_j\longrightarrow0
+\quad\text{in }V,
+\]
+but for every $j$,
+\[
+F(e_j,e_K)=(0_V,z)\ne e_G=F(0,e_K).
+\]
+Hence $F$ is discontinuous at the identity. This completes the proof of Theorem \ref{thm:main}.
+
+\section{Conclusion}
+
+The group $G$ and the four endomorphisms $U_1,U_2,U_3,U_4$ constructed above satisfy exactly the hypotheses of Scottish Book Problem 45, while their pointwise product is a discontinuous Baire-class-one map. Thus these data form a counterexample to the assertion in the original problem.
+
+
+\section*{Acknowledgments}
+Chuyang Chen and Chenhao Bian are grateful to their advisor, Fei Yu, for his guidance on this project.
+
+\section*{Independent review and Lean verification notice}
+\begingroup
+\small
+\begin{center}
+\begin{minipage}{0.94\linewidth}
+\centering
+\textbf{\large No independent human mathematical review has been performed.}
+\end{minipage}
+\end{center}
+
+\medskip
+\noindent The accompanying Lean file compiles under Lean 4.33.1 / Mathlib version v4.33.1 (exact mathlib revision \texttt{0df444a360eaa60ab8c11dca51a86af692955474}).
+
+\medskip
+\noindent The accompanying Lean file formalizes a distinct characteristic-two Heisenberg counterexample; the analytic Hilbert-space presentation in this note is not the construction formalized there.
+
+\medskip
+\noindent\textbf{Successful Lean verification establishes correctness of the formalized statement relative to its assumptions. It does not by itself establish that the formalized statement is exactly equivalent to the historical problem as originally formulated.}
+\endgroup
+
+\section*{Provenance and contacts}
+\begingroup\small\sloppy
+\begin{description}
+\item[Project curator.] Fei Yu.
+\item[AI-generation coordinators and contacts.] Chuyang Chen (\href{mailto:22535018@zju.edu.cn}{22535018@zju.edu.cn}); Chenhao Bian (\href{mailto:bch26@mails.tsinghua.edu.cn}{bch26@mails.tsinghua.edu.cn}).
+\item[Mathematical draft generation.] Mathematical drafts were generated with GPT-5.6 Sol under their supervision.
+\item[Lean code generation.] The accompanying Lean source was generated and revised with GPT-5.6 Sol under their supervision. This is a code-generation provenance statement and is separate from mathematical review.
+\item[Lean build/kernel execution.] The local build and kernel-check commands reported below were executed by Chuyang Chen in the recorded project environment.
+\item[Human mathematical verification.] NONE.
+\item[Statement-correspondence audit.] NONE. No independent human audit has certified that the natural-language statement and the formal Lean statement are exactly equivalent.
+\end{description}
+\medskip
+\noindent Comments, corrections, historical references, and independent verification are very welcome. For long-term correspondence, readers are encouraged to use the repository issue tracker as well as the contacts above.
+\endgroup
+
+\section*{Lean formal verification record}
+
+\begingroup\small\sloppy
+This record separates the natural-language statement, the formal Lean statement, kernel checking of the proof term, and the separate audit of the correspondence between the first two. Kernel acceptance is not treated as human verification of the original problem.
+
+\begin{description}
+\item[Formalization status.] F1.
+\item[Lean source.] \texttt{\detokenize{PaperFormalization/Scottish 45/Main.lean}}.
+\item[Principal formal theorem.] \texttt{\detokenize{Scottish45.scottishBook45_negative}}.
+\item[Build command.] \texttt{\detokenize{lake env lean "PaperFormalization/Scottish 45/Main.lean"}}.
+\item[Build/kernel result.] PASS.
+\item[Lean version.] Lean 4.33.1 (commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6).
+\item[Library snapshot.] mathlib v4.33.1, exact revision 0df444a360eaa60ab8c11dca51a86af692955474.
+\item[Project commit.] PENDING -- the final verified working tree has not yet been committed.
+\item[Kernel axiom audit.] The final theorem depends on \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}. No user-defined mathematical axiom occurs in this dependency audit.
+\item[Scope note.] The Lean development proves the same existential counterexample conclusion as the paper, but uses an algebraically simplified characteristic-two Heisenberg model rather than the paper's analytic Hilbert-space presentation.
+\end{description}
+
+\noindent\textbf{Interpretation of the label.} F1 records the specified formal theorem accepted by the Lean kernel in the stated environment. F2 would additionally require a human statement-correspondence audit.
+\endgroup
+
+\begin{thebibliography}{9}
+
+\bibitem{ScottishBook}
+R.~D. Mauldin (ed.),
+\emph{The Scottish Book: Mathematics from the Scottish Caf\'e},
+2nd ed., Birkh\"auser/Springer, 2015.
+Problem 45 (Banach, July 30, 1935).
+
+\bibitem{PZ1998}
+A. Plichko and A. Zagorodnyuk,
+On automatic continuity and three problems of ``The Scottish Book'' concerning the boundedness of polynomial functionals,
+\emph{J. Math. Anal. Appl.} \textbf{220} (1998), no.~2, 477--494.
+\href{https://doi.org/10.1006/jmaa.1997.5826}{doi:10.1006/jmaa.1997.5826}.
+
+\end{thebibliography}
+
+\end{document}

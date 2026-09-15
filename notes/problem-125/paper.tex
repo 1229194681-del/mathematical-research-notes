@@ -1,0 +1,343 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{A Counterexample to Scottish Book Problem 125}
+\author{}
+\date{}
+
+\newcommand{\publicationstatus}{%
+\begin{center}
+\fbox{\begin{minipage}{0.92\linewidth}
+\small
+\textbf{AI EXPLORATORY MATHEMATICAL NOTE}\\[2pt]
+\textbf{Status:} E1 - AI cross-checked; \textbf{NO INDEPENDENT HUMAN REVIEW}\\
+\textbf{Version:} v1.0\\
+\textbf{First public release:} PENDING\\
+\textbf{Related Lean formalization:} the explicit factorization obstruction used here has been kernel-checked in Lean; see the end matter for the exact formal statement and scope.\\
+\end{minipage}}
+\end{center}
+\medskip
+}
+
+\hypersetup{pdfauthor={}}
+
+\begin{document}
+\maketitle
+
+\publicationstatus
+
+\begin{abstract}
+Scottish Book Problem 125 asks for a global single-valued factorization under the differential conditions stated in the printed problem. We construct an explicit counterexample to that global interpretation.
+\end{abstract}
+
+\begin{quote}
+\small
+\textbf{Feedback.} This note has not undergone independent human mathematical review. Readers who know relevant prior literature, identify an error, or wish to check the argument are especially encouraged to contact the coordinators listed at the end of the paper or to open an issue in the repository.
+\end{quote}
+
+
+\section{Problem 125 and the global interpretation}
+
+Problem 125 of the Scottish Book, attributed to L. Infeld, asks about a function $f(x,y)$ for which there is a graph $y=\phi(x)$ satisfying
+\begin{equation}\label{eq:A}
+ x f_x+y f_y=0,
+ \qquad
+ 4 f_xf_y=1.
+\end{equation}
+Apart from the linear case
+\[
+ f(x,y)=ax+by,\qquad ab=\frac14,
+\]
+the question asks whether there must exist a one-variable function $F$ satisfying
+\begin{equation}\label{eq:factor}
+ F\!\left(\frac{x}{\phi(x)}\right)=f(x,\phi(x)).
+\end{equation}
+See \cite{Ulam1977,Mauldin2015}.
+
+We make the global quantifier precise.  Put
+\[
+ X=\mathbb R\setminus\{0\},\qquad
+ r(x)=\frac{x}{\phi(x)},\qquad I=r(X).
+\]
+The requested conclusion means that there is one single-valued map
+\[
+ F:I\longrightarrow\mathbb R
+\]
+for which \eqref{eq:factor} holds for every $x\in X$.  No continuity, differentiability, or analyticity of $F$ is assumed.  Thus a single collision
+\[
+ r(x_1)=r(x_2),\qquad f(x_1,\phi(x_1))\ne f(x_2,\phi(x_2))
+\]
+is enough to disprove the global factorization.
+
+\section{The explicit counterexample}
+
+Define
+\begin{equation}\label{eq:defs}
+ s(x)=(x-2)^2+1,
+ \qquad
+ \phi(x)=-x\,s(x)^2,
+\end{equation}
+and
+\begin{equation}\label{eq:fdef}
+ g(x)=-\frac{x^3}{6}+\frac{5x}{2},
+ \qquad
+ f(x,y)=g(x)+\frac{y}{2s(x)}.
+\end{equation}
+Since
+\begin{equation}\label{eq:spos}
+ s(x)=(x-2)^2+1>0
+\end{equation}
+for every real $x$, the denominator in \eqref{eq:fdef} never vanishes.  In particular, $f$ is defined on all of $\mathbb R^2$, and $\phi(x)\ne0$ whenever $x\ne0$.
+
+For later use, set
+\begin{equation}\label{eq:partials}
+ p(x,y)=-\frac{x^2}{2}+\frac52-\frac{y(x-2)}{s(x)^2},
+ \qquad
+ q(x,y)=\frac1{2s(x)}.
+\end{equation}
+
+\begin{lemma}[Partial derivatives]\label{lem:partials}
+For every $(x,y)\in\mathbb R^2$, the derivative of $t\mapsto f(t,y)$ at $t=x$ is $p(x,y)$, and the derivative of $t\mapsto f(x,t)$ at $t=y$ is $q(x,y)$.
+\end{lemma}
+
+\begin{proof}
+Differentiate \eqref{eq:fdef}.  Since $s'(x)=2(x-2)$,
+\[
+ \frac{\partial}{\partial x}\frac{y}{2s(x)}
+ =-\frac{y(x-2)}{s(x)^2},
+\]
+while $g'(x)=-x^2/2+5/2$.  The derivative with respect to $y$ is $1/(2s(x))$.
+\end{proof}
+
+On the graph $y=\phi(x)$ one obtains
+\begin{equation}\label{eq:oncurvepartials}
+ p(x,\phi(x))=\frac{s(x)}2,
+ \qquad
+ q(x,\phi(x))=\frac1{2s(x)}.
+\end{equation}
+Hence
+\begin{equation}\label{eq:Averified}
+ x\,p(x,\phi(x))+\phi(x)q(x,\phi(x))=0,
+ \qquad
+ 4p(x,\phi(x))q(x,\phi(x))=1.
+\end{equation}
+Together with Lemma \ref{lem:partials}, these are exactly the two equations in \eqref{eq:A}.
+
+\begin{theorem}[Counterexample]\label{thm:counterexample}
+The functions \eqref{eq:defs}--\eqref{eq:fdef} satisfy condition \eqref{eq:A} for every real $x$.  The function $f$ is not of the excluded linear form $ax+by$ with $ab=1/4$.  Moreover, there is no single-valued map $F:I\to\mathbb R$ satisfying \eqref{eq:factor} for every nonzero real $x$.
+\end{theorem}
+
+\begin{proof}
+The differential equations follow from \eqref{eq:oncurvepartials}--\eqref{eq:Averified}.
+
+At $x=1$ and $x=3$ we have $s(1)=s(3)=2$, so
+\begin{equation}\label{eq:collision}
+ r(1)=\frac1{\phi(1)}=-\frac14
+ =\frac3{\phi(3)}=r(3).
+\end{equation}
+Direct substitution gives
+\begin{equation}\label{eq:values}
+ f(1,\phi(1))=\frac43,
+ \qquad
+ f(3,\phi(3))=0.
+\end{equation}
+Thus a single-valued $F$ on $I$ would have to assign two different values to the same point $-1/4$, which is impossible.
+
+Finally, $f$ is not of the excluded linear form.  For example, the $y$-slope equals $1/(2s(x))$, which takes different values at $x=0$ and $x=2$; equivalently, four explicit evaluations already contradict a representation $f(x,y)=ax+by$.
+\end{proof}
+
+\section{The graph is the exact simultaneous solution set}
+
+The example has a useful strengthening which is still completely elementary.  Define the graph residual
+\begin{equation}\label{eq:D}
+ D(x,y)=y+x s(x)^2.
+\end{equation}
+Then $D(x,y)=0$ if and only if $y=\phi(x)$.
+
+Clearing the nonzero denominators in the two differential expressions yields the identities
+\begin{align}
+ \bigl(xp(x,y)+yq(x,y)\bigr)\,2s(x)^2
+   &=-(x^2-5)D(x,y),\label{eq:factor1}\\
+ \bigl(4p(x,y)q(x,y)-1\bigr)s(x)^3
+   &=-2(x-2)D(x,y).\label{eq:factor2}
+\end{align}
+
+\begin{proposition}[Exact common zero set]\label{prop:zero-set}
+For every $(x,y)\in\mathbb R^2$,
+\[
+ xp(x,y)+yq(x,y)=0,
+ \qquad
+ 4p(x,y)q(x,y)=1
+\]
+if and only if
+\[
+ y=\phi(x).
+\]
+\end{proposition}
+
+\begin{proof}
+The reverse implication is \eqref{eq:Averified}.  Conversely, suppose both equations hold.  Equation \eqref{eq:factor2} gives
+\[
+ (x-2)D(x,y)=0.
+\]
+If $D(x,y)=0$ we are done.  Otherwise $x=2$.  Substituting $x=2$ in \eqref{eq:factor1} gives $D(2,y)=0$, a contradiction.  Hence $D(x,y)=0$ and therefore $y=\phi(x)$.
+\end{proof}
+
+Thus the failure of factorization cannot be avoided, for this explicit pair, by selecting a different graph from a larger simultaneous zero set.
+
+\section{A symmetric family of collisions}
+
+The two-point collision in Theorem \ref{thm:counterexample} is part of a whole family.  Along the graph one has
+\begin{equation}\label{eq:ratioformula}
+ r(x)=-\frac1{s(x)^2}
+ \qquad (x\ne0),
+\end{equation}
+and
+\begin{equation}\label{eq:curvevalue}
+ f(x,\phi(x))=\frac{2x^2(3-x)}3.
+\end{equation}
+Since
+\[
+ s(2-t)=s(2+t),
+\]
+we immediately get equal ratio parameters at the symmetric points, whenever both points are nonzero.  Their curve values satisfy
+\begin{equation}\label{eq:symdiff}
+ f(2+t,\phi(2+t))-f(2-t,\phi(2-t))
+ =-\frac43t^3.
+\end{equation}
+
+\begin{proposition}[Symmetric fold obstruction]\label{prop:fold}
+Let $t\in\mathbb R$ satisfy
+\[
+ t\ne0,\qquad 2-t\ne0,\qquad 2+t\ne0.
+\]
+Then
+\[
+ r(2-t)=r(2+t),
+\]
+but
+\[
+ f(2-t,\phi(2-t))\ne f(2+t,\phi(2+t)).
+\]
+\end{proposition}
+
+\begin{proof}
+The equality of ratios follows from \eqref{eq:ratioformula} and $s(2-t)=s(2+t)$.  The inequality follows from \eqref{eq:symdiff}, since $t^3\ne0$ when $t\ne0$.
+\end{proof}
+
+This makes the global obstruction completely transparent: the parameter map folds symmetrically around $x=2$, while the curve value does not descend to its fibers.
+
+
+\section*{Acknowledgments}
+Chuyang Chen and Chenhao Bian are grateful to their advisor, Fei Yu, for his guidance on this project.
+
+\section*{Independent review and Lean verification notice}
+\begingroup
+\small
+\begin{center}
+\begin{minipage}{0.94\linewidth}
+\centering
+\textbf{\large No independent human mathematical review has been performed.}
+\end{minipage}
+\end{center}
+
+\medskip
+\noindent The accompanying Lean file compiles under Lean 4.33.1 / Mathlib version v4.33.1 (exact mathlib revision \texttt{0df444a360eaa60ab8c11dca51a86af692955474}).
+
+\medskip
+\noindent The accompanying Lean file covers the explicit factorization obstruction used in this note.
+
+\medskip
+\noindent\textbf{Successful Lean verification establishes correctness of the formalized statement relative to its assumptions. It does not by itself establish that the formalized statement is exactly equivalent to the historical problem as originally formulated.}
+\endgroup
+
+\section*{Provenance and contacts}
+\begingroup\small\sloppy
+\begin{description}
+\item[Project curator.] Fei Yu.
+\item[AI-generation coordinators and contacts.] Chuyang Chen (\href{mailto:22535018@zju.edu.cn}{22535018@zju.edu.cn}); Chenhao Bian (\href{mailto:bch26@mails.tsinghua.edu.cn}{bch26@mails.tsinghua.edu.cn}).
+\item[Mathematical draft generation.] Mathematical drafts were generated with GPT-5.6 Sol under their supervision.
+\item[Lean code generation.] The accompanying Lean source was generated and revised with GPT-5.6 Sol under their supervision. This is a code-generation provenance statement and is separate from mathematical review.
+\item[Lean build/kernel execution.] The local build and kernel-check commands reported below were executed by Chuyang Chen in the recorded project environment.
+\item[Human mathematical verification.] NONE.
+\item[Statement-correspondence audit.] NONE. No independent human audit has certified that the natural-language statement and the formal Lean statement are exactly equivalent.
+\end{description}
+\medskip
+\noindent Comments, corrections, historical references, and independent verification are very welcome. For long-term correspondence, readers are encouraged to use the repository issue tracker as well as the contacts above.
+\endgroup
+
+\section*{Lean formal verification record}
+
+\begingroup\small\sloppy
+This record separates the natural-language statement, the formal Lean statement, kernel checking of the proof term, and the separate audit of the correspondence between the first two. Kernel acceptance is not treated as human verification of the original problem.
+
+\begin{description}
+\item[Formalization status.] F1.
+\item[Lean source.] \texttt{\detokenize{PaperFormalization/Scottish 125/Main.lean}}.
+\item[Principal formal theorems.] \texttt{\detokenize{Scottish125.scottishBook125_negative}} and \texttt{\detokenize{Scottish125.scottishBook125_paper_package}}.
+\item[Build command.] \texttt{\detokenize{lake env lean "PaperFormalization/Scottish 125/Main.lean"}}.
+\item[Build/kernel result.] PASS.
+\item[Lean version.] Lean 4.33.1 (commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6).
+\item[Library snapshot.] mathlib v4.33.1, exact revision 0df444a360eaa60ab8c11dca51a86af692955474.
+\item[Project commit.] PENDING -- the final verified working tree has not yet been committed.
+\item[Kernel axiom audit.] Both principal theorems depend on \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}. No user-defined mathematical axiom occurs in these dependency audits.
+\item[Scope note.] The formal package covers the explicit partial derivatives, the two equations on the curve, the non-linear case, the exact common zero set, and the global factorization obstruction used in the paper.
+\end{description}
+
+\noindent\textbf{Interpretation of the label.} F1 records the specified formal statements accepted by the Lean kernel in the stated environment. F2 would additionally require a human statement-correspondence audit.
+\endgroup
+
+\section{Lean formalization and scope}
+
+The accompanying file \texttt{PaperFormalization/Scottish 125/Main.lean} is intended to formalize every mathematical assertion retained above, with no \texttt{sorry} and no custom mathematical axioms.  The correspondence is as follows.
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Paper assertion & Lean declaration \\
+\midrule
+$s(x)>0$ and $s(x)\ne0$ & \texttt{s\_pos}, \texttt{s\_ne\_zero} \\
+$\phi(x)\ne0$ for $x\ne0$ & \texttt{phi\_ne\_zero} \\
+Lemma \ref{lem:partials} & \texttt{hasDerivAt\_f\_x}, \texttt{hasDerivAt\_f\_y} \\
+Condition \eqref{eq:A} on the graph & \texttt{satisfiesConditionA} \\
+Not in the excluded linear case & \texttt{f\_not\_excluded\_linear} \\
+No global single-valued factorization & \texttt{no\_global\_factorization} \\
+Proposition \ref{prop:zero-set} & \texttt{common\_zero\_set\_exact} \\
+Equations \eqref{eq:ratioformula}, \eqref{eq:curvevalue} & \texttt{ratio\_formula}, \texttt{curve\_value\_formula} \\
+Equation \eqref{eq:symdiff} & \texttt{symmetric\_curve\_value\_difference} \\
+Proposition \ref{prop:fold} & \texttt{symmetric\_fold\_obstruction} \\
+Theorem \ref{thm:counterexample}, bundled & \texttt{scottishBook125\_negative} \\
+All retained claims, bundled & \texttt{scottishBook125\_paper\_package} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Earlier complex-entire and finite-order strengthenings are deliberately omitted. They are separate results requiring additional complex-analysis infrastructure in Lean. This keeps the mathematical scope of the paper identical to the scope of the supplied formal development.
+
+\begin{thebibliography}{9}
+\bibitem{Ulam1977}
+S. M. Ulam, editor,
+\emph{The Scottish Book: Mathematics from the Scottish Caf\'e},
+Los Alamos Scientific Laboratory, 1977.
+
+\bibitem{Mauldin2015}
+R. D. Mauldin, editor,
+\emph{The Scottish Book: Mathematics from the Scottish Caf\'e, with Selected Problems from the New Scottish Book},
+2nd ed., Birkh\"auser, 2015.
+\end{thebibliography}
+
+\end{document}

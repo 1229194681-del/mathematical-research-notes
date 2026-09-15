@@ -1,0 +1,427 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\geometry{margin=1.08in}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  citecolor=blue!50!black,
+  urlcolor=blue!55!black,
+  pdftitle={A Flat-Function Counterexample to Eidelheit's Scottish Book Problem 174}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\K}{\mathbb K}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Lcal}{\mathcal L}
+\newcommand{\peq}{r_{\mathrm{eq}}}
+
+\title{A Flat-Function Counterexample to Eidelheit's Scottish Book Problem 174}
+\author{}
+\date{}
+
+\newcommand{\publicationstatus}{%
+\begin{center}
+\fbox{\begin{minipage}{0.92\linewidth}
+\small
+\textbf{AI EXPLORATORY MATHEMATICAL NOTE}\\[2pt]
+\textbf{Status:} E1 - AI cross-checked; \textbf{NO INDEPENDENT HUMAN REVIEW}\\
+\textbf{Version:} v1.0\\
+\textbf{First public release:} PENDING\\
+\textbf{Related Lean formalization:} a distinct real-scalar counterexample to Problem 174 has been kernel-checked in Lean. The flat-function construction in this note has not been formalized.\\
+\end{minipage}}
+\end{center}
+\medskip
+}
+
+\hypersetup{pdfauthor={}}
+
+\begin{document}
+\maketitle
+
+\publicationstatus
+
+\begin{abstract}
+Eidelheit's Problem 174 in the \emph{Scottish Book} asks whether local invertibility of $I-\lambda U$ on a space of type $(B_0)$ forces the usual Neumann expansion of its inverse. We exhibit a counterexample on the Fr\'echet space of smooth functions flat at the origin.
+\end{abstract}
+
+\begin{quote}
+\small
+\textbf{Feedback.} This note has not undergone independent human mathematical review. Readers who know relevant prior literature, identify an error, or wish to check the argument are especially encouraged to contact the coordinators listed at the end of the paper or to open an issue in the repository.
+\end{quote}
+
+
+\section{The problem and a counterexample}
+
+Problem 174 was entered by M.~Eidelheit on July 23, 1938.  In modern notation it asks:
+if $U$ is a linear self-map of a space of type $(B_0)$ and $I-\lambda U$ is invertible for
+all sufficiently small $\lambda$, must one have
+\[
+  (I-\lambda U)^{-1}=\sum_{n=0}^{\infty}\lambda^nU^n
+\]
+for sufficiently small $\lambda$?  See Mauldin's second edition of the \emph{Scottish
+Book}~\cite[Problem 174, p.~266]{ScottishBook}.  The same edition places Problem 174 in a
+combined list of unsolved problems, problems with no commentary, and problems of unknown
+status~\cite[p.~287]{ScottishBook}.
+
+The historical term $(B_0)$ corresponds to what is now called a Fr\'echet space: a complete
+metrizable locally convex space; see, for example, the terminology glossary in
+Ostrovskii--Plichko~\cite{OstrovskiiPlichko}.  We shall actually verify the relevant
+properties directly for our example.
+
+\begin{theorem}[Counterexample to Problem 174]\label{thm:main}
+Let $\K$ be either $\R$ or $\C$.  There is a Fr\'echet space $E$ over $\K$ and a continuous
+linear operator $U:E\to E$ such that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+  \item $I-\lambda U$ is a topological isomorphism for every $\lambda\in\K$;
+  \item for every $\lambda\neq0$, the series
+  \[
+     \sum_{n=0}^{\infty}\lambda^nU^n
+  \]
+  does not converge in the strong operator topology.
+\end{enumerate}
+Thus the construction is a counterexample to the assertion in Scottish Book Problem 174.
+\end{theorem}
+
+\section{The flat-function counterexample}
+
+Set
+\[
+ E:=C_{0}^{\infty}([0,1];\K)
+ :=\bigl\{f\in C^{\infty}([0,1];\K): f^{(j)}(0)=0\ \text{for every }j\ge0\bigr\}.
+\]
+Equip $E$ with the increasing family of seminorms
+\[
+ p_m(f):=\max_{0\le j\le m}\,\sup_{x\in[0,1]}|f^{(j)}(x)|,
+ \qquad m=0,1,2,\dots .
+\]
+The maps $f\mapsto f^{(j)}(0)$ are continuous on $C^{\infty}([0,1])$, hence $E$ is a
+closed linear subspace of $C^{\infty}([0,1])$.  It follows that $E$ is Fr\'echet.  In the
+historical terminology, it is therefore a space of type $(B_0)$.
+
+Let
+\[
+   D:E\longrightarrow E,\qquad Df=f'.
+\]
+Since
+\[
+ p_m(Df)\le p_{m+1}(f),
+\]
+the differentiation operator is continuous.
+
+\begin{proposition}\label{prop:invertible}
+For every $\lambda\in\K$, the operator $I-\lambda D:E\to E$ is a topological
+isomorphism.
+\end{proposition}
+
+\begin{proof}
+The case $\lambda=0$ is trivial.  Assume $\lambda\neq0$ and let $g\in E$.  Define
+\begin{equation}\label{eq:resolvent}
+  (R_\lambda g)(x)
+   :=-\frac1\lambda\int_0^x e^{(x-t)/\lambda}g(t)\,dt.
+\end{equation}
+Then
+\begin{equation}\label{eq:recurrence}
+ (R_\lambda g)'=\lambda^{-1}(R_\lambda g-g),
+\end{equation}
+and therefore
+\[
+ (I-\lambda D)R_\lambda g=g.
+\]
+Also $R_\lambda g(0)=0$.  Evaluating~\eqref{eq:recurrence} and its successive
+derivatives at $0$ gives inductively
+\[
+   (R_\lambda g)^{(j)}(0)=0\qquad(j\ge0),
+\]
+because $g^{(j)}(0)=0$ for all $j$.  Hence $R_\lambda g\in E$.
+
+If $(I-\lambda D)f=0$, then $f'=\lambda^{-1}f$, so
+$f(x)=Ce^{x/\lambda}$.  Since $f(0)=0$, one has $C=0$.  Thus $I-\lambda D$ is
+bijective and $R_\lambda=(I-\lambda D)^{-1}$.
+
+For completeness, the inverse is continuous.  From~\eqref{eq:resolvent},
+\[
+ p_0(R_\lambda g)
+ \le \frac{e^{|1/\lambda|}}{|\lambda|}\,p_0(g).
+\]
+Using~\eqref{eq:recurrence} repeatedly gives, for each $m$, a constant
+$C_{m,\lambda}>0$ such that
+\[
+ p_m(R_\lambda g)\le C_{m,\lambda}p_m(g).
+\]
+Thus $R_\lambda\in\Lcal(E)$.  (Alternatively, continuity follows from the open mapping
+theorem for Fr\'echet spaces.)
+\end{proof}
+
+We next show that the associated Neumann series has no nonzero strong-convergence
+parameter at all.
+
+\begin{proposition}\label{prop:divergence}
+There is a single $f\in E$ such that, for every $\lambda\in\K\setminus\{0\}$,
+\[
+  \lambda^nD^nf\not\longrightarrow0\quad\text{in }E.
+\]
+Consequently $\sum_{n\ge0}\lambda^nD^nf$ diverges in $E$ for every $\lambda\neq0$.
+\end{proposition}
+
+\begin{proof}
+Choose $\chi\in C_c^\infty((0,1);\K)$ with $\chi\equiv1$ on a neighborhood of
+$x_0=1/2$, and put
+\[
+   f(x):=\frac{\chi(x)}{\frac32-x}.
+\]
+Since $\chi$ vanishes near $0$, the function $f$ belongs to $E$.  Near $x_0$ it agrees
+with $(3/2-x)^{-1}$, hence
+\[
+   f^{(n)}(x_0)=n!\qquad(n\ge0).
+\]
+Therefore
+\[
+   \bigl|\lambda^nD^nf(x_0)\bigr|=|\lambda|^n n!\longrightarrow\infty
+   \qquad(\lambda\neq0).
+\]
+The point-evaluation functional $h\mapsto h(x_0)$ is continuous on $E$, so
+$\lambda^nD^nf$ cannot tend to zero in $E$.  A convergent series must have terms tending
+to zero, which proves the assertion.
+\end{proof}
+
+Theorem~\ref{thm:main} follows immediately from
+Propositions~\ref{prop:invertible} and~\ref{prop:divergence}.  Notice the strength of the
+example: the hypothesis in Problem 174 holds not merely near $\lambda=0$ but for every
+scalar $\lambda$, whereas the proposed Neumann series fails for every nonzero parameter.
+
+\section{A general Neumann-radius lemma}
+
+The preceding example is not merely a failure of a particular formal manipulation.  On a
+Fr\'echet space, convergence of a Neumann series at even one nonzero parameter already
+forces substantial uniform control.
+
+\begin{lemma}[One point of strong convergence gives a disk]\label{lem:disk}
+Let $X$ be a Fr\'echet space, let $T\in\Lcal(X)$, and let $\lambda_0\neq0$.  Suppose that
+for every $x\in X$ the series
+\[
+   \sum_{n=0}^{\infty}\lambda_0^nT^nx
+\]
+converges in $X$.  Then, for every $\lambda$ with $|\lambda|<|\lambda_0|$, the series
+\[
+   \sum_{n=0}^{\infty}\lambda^nT^n
+\]
+converges strongly and its sum is $(I-\lambda T)^{-1}$.
+\end{lemma}
+
+\begin{proof}
+For each $x\in X$, convergence at $\lambda_0$ implies that the set
+\[
+   \{\lambda_0^nT^nx:n\ge0\}
+\]
+is bounded.  Since Fr\'echet spaces are barrelled, the Banach--Steinhaus theorem implies
+that the family
+\[
+   \{\lambda_0^nT^n:n\ge0\}\subset\Lcal(X)
+\]
+is equicontinuous.  Thus, for every continuous seminorm $p$ on $X$, there are a
+continuous seminorm $q$ and a constant $C>0$ such that
+\[
+   p(\lambda_0^nT^nx)\le Cq(x)
+   \qquad(n\ge0,\ x\in X).
+\]
+If $|\lambda|<|\lambda_0|$, then for $M>N$,
+\[
+ p\!\left(\sum_{n=N}^{M}\lambda^nT^nx\right)
+ \le Cq(x)\sum_{n=N}^{M}
+       \left|\frac{\lambda}{\lambda_0}\right|^n.
+\]
+Hence the partial sums form a Cauchy sequence for every continuous seminorm.  Completeness
+of $X$ gives strong convergence.
+
+Finally,
+\[
+ (I-\lambda T)\sum_{n=0}^{N}\lambda^nT^n
+   =I-\lambda^{N+1}T^{N+1},
+\]
+and the same identity holds with the factors reversed.  Equicontinuity gives
+\[
+ p(\lambda^{N+1}T^{N+1}x)
+ \le Cq(x)\left|\frac{\lambda}{\lambda_0}\right|^{N+1}\longrightarrow0.
+\]
+Passing to the limit proves that the sum is a two-sided inverse of $I-\lambda T$.
+\end{proof}
+
+This suggests the following useful quantity.  For $T\in\Lcal(X)$ define its
+equicontinuous Neumann radius by
+\[
+  \peq(T):=
+  \sup\Bigl\{r>0:\{r^nT^n:n\ge0\}\text{ is equicontinuous}\Bigr\},
+\]
+with the convention that the supremum of the empty set is $0$.
+
+\begin{corollary}\label{cor:req}
+If $|\lambda|<\peq(T)$, then
+\[
+   (I-\lambda T)^{-1}=\sum_{n=0}^{\infty}\lambda^nT^n
+\]
+with strong convergence.  For the differentiation operator $D$ on
+$C_0^\infty([0,1])$ used above,
+\[
+   \peq(D)=0.
+\]
+\end{corollary}
+
+\begin{proof}
+For the first assertion choose $r$ with $|\lambda|<r<\peq(T)$ and use the defining
+equicontinuity estimate together with a geometric series.  For $D$, the function in
+Proposition~\ref{prop:divergence} satisfies
+\[
+   |(r^nD^nf)(1/2)|=r^nn!\to\infty
+\]
+for every $r>0$.  Hence $\{r^nD^n:n\ge0\}$ cannot be equicontinuous for any $r>0$.
+\end{proof}
+
+Thus the precise obstruction in Problem 174 is that local invertibility of
+$I-\lambda U$ does not force a positive equicontinuous Neumann radius.
+
+\section{Historical remarks}
+
+The operator-theoretic phenomenon used above is classical.  Maeda studied spectra of
+operators on locally convex spaces in 1961~\cite{Maeda}.  Jord\'a notes that the Volterra
+operator on the same flat-function space was already stated, without proof, in Maeda's
+Example~2; Jord\'a proves in particular that the differentiation operator $D$ is an
+isomorphism and that both its ordinary and Waelbroeck spectra are empty
+\cite[Proposition~1]{Jorda}.  Earlier, Mart\'inez, Sanz and Calvo explicitly used the same
+space and the operator $A=-iD$ as an example of a bounded operator with empty spectrum
+\cite[Example~2]{MSC}.
+
+These references show that the underlying flat-function example is not new.  The point of
+the present note is simply that this classical example gives an immediate and particularly
+counterexample to Eidelheit's Problem 174 in a strong form.  We make no claim here concerning
+priority for that observation.
+
+\begin{remark}[Resolvent at infinity]
+There is no contradiction with the good finite-parameter behavior of the Waelbroeck
+resolvent recorded in~\cite{Jorda}.  In Problem 174 one considers
+\[
+  (I-\lambda D)^{-1}
+   =-\lambda^{-1}(D-\lambda^{-1}I)^{-1}.
+\]
+Thus the limit $\lambda\to0$ corresponds to the usual resolvent parameter tending to
+infinity.  The counterexample is therefore naturally viewed as a failure of resolvent
+control at infinity.
+\end{remark}
+
+\section*{Conclusion}
+
+On the Fr\'echet space of smooth functions flat at the origin, differentiation gives a
+maximal failure of the conclusion proposed in Scottish Book Problem 174: every
+$I-\lambda D$ is continuously invertible, but the Neumann series has strong-convergence
+radius zero.  Hence the answer to Problem 174 is \emph{no}.
+
+
+\section*{Acknowledgments}
+Chuyang Chen and Chenhao Bian are grateful to their advisor, Fei Yu, for his guidance on this project.
+
+\section*{Independent review and Lean verification notice}
+\begingroup
+\small
+\begin{center}
+\begin{minipage}{0.94\linewidth}
+\centering
+\textbf{\large No independent human mathematical review has been performed.}
+\end{minipage}
+\end{center}
+
+\medskip
+\noindent The accompanying Lean file compiles under Lean 4.33.1 / Mathlib version v4.33.1 (exact mathlib revision \texttt{0df444a360eaa60ab8c11dca51a86af692955474}).
+
+\medskip
+\noindent The accompanying Lean file formalizes a distinct real-scalar scaled-quarter-turn counterexample. The flat-function construction in this note, including its complex-scalar version, has not been formalized by that file.
+
+\medskip
+\noindent\textbf{Successful Lean verification establishes correctness of the formalized statement relative to its assumptions. It does not by itself establish that the formalized statement is exactly equivalent to the historical problem as originally formulated.}
+\endgroup
+
+\section*{Provenance and contacts}
+\begingroup\small\sloppy
+\begin{description}
+\item[Project curator.] Fei Yu.
+\item[AI-generation coordinators and contacts.] Chuyang Chen (\href{mailto:22535018@zju.edu.cn}{22535018@zju.edu.cn}); Chenhao Bian (\href{mailto:bch26@mails.tsinghua.edu.cn}{bch26@mails.tsinghua.edu.cn}).
+\item[Mathematical draft generation.] Mathematical drafts were generated with GPT-5.6 Sol under their supervision.
+\item[Lean code generation.] The accompanying Lean source was generated and revised with GPT-5.6 Sol under their supervision. This is a code-generation provenance statement and is separate from mathematical review.
+\item[Lean build/kernel execution.] The local build and kernel-check commands reported below were executed by Chuyang Chen in the recorded project environment.
+\item[Human mathematical verification.] NONE.
+\item[Statement-correspondence audit.] NONE. No independent human audit has certified that the natural-language statement and the formal Lean statement are exactly equivalent.
+\end{description}
+\medskip
+\noindent Comments, corrections, historical references, and independent verification are very welcome. For long-term correspondence, readers are encouraged to use the repository issue tracker as well as the contacts above.
+\endgroup
+
+\section*{Lean formal verification record}
+
+\begingroup\small\sloppy
+This record separates the natural-language statement, the formal Lean statement, kernel checking of the proof term, and the separate audit of the correspondence between the first two. Kernel acceptance is not treated as human verification of the original problem.
+
+\begin{description}
+\item[Formalization status.] F1 for the real-scalar formal counterexample.
+\item[Lean source.] \texttt{\detokenize{PaperFormalization/Scottish 174/Main.lean}}.
+\item[Principal formal theorems.] \texttt{\detokenize{ScottishBook174.scottish_book_174_negative}} and \texttt{\detokenize{ScottishBook174.resolvent_everywhere_but_no_neumann_radius}}.
+\item[Build command.] \texttt{\detokenize{lake env lean "PaperFormalization/Scottish 174/Main.lean"}}.
+\item[Build/kernel result.] PASS. The build emitted one deprecation warning for \texttt{ContinuousLinearMap.mul\_apply}; it did not affect kernel acceptance.
+\item[Lean version.] Lean 4.33.1 (commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6).
+\item[Library snapshot.] mathlib v4.33.1, exact revision 0df444a360eaa60ab8c11dca51a86af692955474.
+\item[Project commit.] PENDING -- the final verified working tree has not yet been committed.
+\item[Kernel axiom audit.] Both principal theorems depend on \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}. No user-defined mathematical axiom occurs in these dependency audits.
+\item[Scope note.] The Lean theorem is a real-scalar counterexample on the Fr\'echet space $\mathbb N\to(\mathbb R\times\mathbb R)$ using scaled quarter-turn blocks. The paper's flat-function theorem is stated over both $\mathbb R$ and $\mathbb C$; the complex-scalar portion and the paper's specific flat-function construction are not formalized by this Lean file.
+\end{description}
+
+\noindent\textbf{Interpretation of the label.} F1 applies to the real-scalar formal theorem above. It does not by itself certify the paper's stronger complex-scalar statement or the correspondence between the two constructions. F2 would additionally require a human statement-correspondence audit.
+\endgroup
+
+\begin{thebibliography}{9}
+
+\bibitem{ScottishBook}
+R.~D. Mauldin (ed.),
+\emph{The Scottish Book: Mathematics from the Scottish Caf\'e, with Selected Problems from the New Scottish Book},
+2nd ed., Birkh\"auser/Springer, 2015.
+
+\bibitem{OstrovskiiPlichko}
+M.~I. Ostrovskii and A.~M. Plichko,
+``On the Ukrainian translation of \emph{Th\'eorie des op\'erations lin\'eaires} and Mazur's updates of the `Remarks' section,''
+\emph{Matematychni Studii} \textbf{32} (2009), 96--111.
+
+\bibitem{Maeda}
+F.~Maeda,
+``Remarks on spectra of operators on a locally convex space,''
+\emph{Proc. Natl. Acad. Sci. USA} \textbf{47} (1961), 1052--1055.
+\href{https://doi.org/10.1073/pnas.47.7.1052}{doi:10.1073/pnas.47.7.1052}.
+
+\bibitem{MSC}
+C.~Mart\'inez, M.~Sanz and V.~Calvo,
+``Fractional powers of non-negative operators in Fr\'echet spaces,''
+\emph{International Journal of Mathematics and Mathematical Sciences} \textbf{12} (1989), 309--320.
+\href{https://doi.org/10.1155/S0161171289000360}{doi:10.1155/S0161171289000360}.
+
+\bibitem{Jorda}
+E.~Jord\'a,
+``On the spectrum of isomorphisms defined on the space of smooth functions which are flat at 0,''
+\emph{Rev. Real Acad. Cienc. Exactas Fis. Nat. Ser. A-Mat.} \textbf{117} (2023), Article 103.
+\href{https://doi.org/10.1007/s13398-023-01433-7}{doi:10.1007/s13398-023-01433-7}.
+
+\end{thebibliography}
+
+\end{document}

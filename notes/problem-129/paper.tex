@@ -1,0 +1,505 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{booktabs}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{external}[theorem]{Published input}
+\theoremstyle{definition}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Om}{\Omega}
+\newcommand{\lap}{\Delta}
+\newcommand{\1}{\mathbf{1}}
+
+\title{A Counterexample to Nikliborc Problem 129\\from Nested Polynomial Inclusions}
+\author{}
+\date{Revised standalone draft, September 2026}
+
+\newcommand{\publicationstatus}{%
+\begin{center}
+\fbox{\begin{minipage}{0.92\linewidth}
+\small
+\textbf{AI EXPLORATORY MATHEMATICAL NOTE}\\[2pt]
+\textbf{Status:} E1 - AI cross-checked; \textbf{NO INDEPENDENT HUMAN REVIEW}\\
+\textbf{Version:} v1.0\\
+\textbf{First public release:} PENDING\\
+\textbf{Related Lean formalization:} the article-specific deduction is kernel-checked relative to explicit \texttt{PublishedTheory} assumptions, which are not themselves formalized here; see the end matter.\\
+\end{minipage}}
+\end{center}
+\medskip
+}
+
+\hypersetup{pdfauthor={}}
+
+\begin{document}
+\maketitle
+
+\publicationstatus
+
+\begin{abstract}
+Nikliborc Problem 129 in the \emph{Scottish Book} asks whether a homogeneous shell with constant Newtonian potential throughout its cavity must be bounded by two homothetic ellipsoids. We construct a counterexample from two nested polynomial inclusions whose interior potentials have the same nonquadratic harmonic part.
+\end{abstract}
+
+\begin{quote}
+\small
+\textbf{Feedback.} This note has not undergone independent human mathematical review. Readers who know relevant prior literature, identify an error, or wish to check the argument are especially encouraged to contact the coordinators listed at the end of the paper or to open an issue in the repository.
+\end{quote}
+
+
+\section{The problem and strategy}
+
+In $\R^3$ let
+\[
+  G(x)=\frac{1}{4\pi|x|},\qquad
+  U_{\Om}(x)=\int_{\Om}G(x-y)\,dy
+\]
+for a bounded measurable body $\Om$.
+
+The printed Problem 129 concerns two nested sphere-like boundary surfaces and asks whether constancy of the Newtonian potential of the homogeneous material between them throughout the inner cavity forces the two boundaries to be homothetic ellipsoids \cite{ScottishBook}.
+
+\begin{problem}[Nikliborc 129, modernized]\label{prob:129}
+Suppose a homogeneous shell in $\R^3$ is bounded by two nested closed surfaces, each homeomorphic to $S^2$, and its Newtonian potential is constant throughout the cavity. Must the two boundary surfaces be homothetic ellipsoids?
+\end{problem}
+
+The strategy is to construct bounded domains $\Om_1,\Om_2$ with
+\[
+ \overline{\Om_1}\subset \Om_2
+\]
+and, on their respective interiors,
+\begin{align*}
+ U_{\Om_1}(x)&=d_1-\frac{|x|^2}{6}+tH(x),\\
+ U_{\Om_2}(x)&=d_2-\frac{|x|^2}{6}+tH(x),
+\end{align*}
+with the \emph{same} nonquadratic term $tH$. Their difference is then constant on $\Om_1$.
+
+\section{Published analytic inputs}
+
+We isolate the external results used below. These are not claims of the present note.
+
+\begin{external}[Potential of a homogeneous ball]\label{ext:ball}
+For $B_a=\{x:|x|<a\}$,
+\begin{equation}\label{eq:ballpotential}
+U_{B_a}(x)=
+\begin{cases}
+\displaystyle \frac{a^2}{2}-\frac{|x|^2}{6},& |x|\le a,\\[6pt]
+\displaystyle \frac{a^3}{3|x|},& |x|\ge a.
+\end{cases}
+\end{equation}
+Consequently, if
+\[
+ d_a=\frac{a^2}{2},\qquad q_a(x)=d_a-\frac{|x|^2}{6},
+\]
+then $U_{B_a}=q_a$ on $\overline{B_a}$ and
+\begin{equation}\label{eq:positivegap}
+ U_{B_a}(x)-q_a(x)
+ =\frac{(|x|-a)^2(|x|+2a)}{6|x|}>0
+ \qquad(|x|>a).
+\end{equation}
+\end{external}
+
+This is classical Newtonian potential theory; see, for example, MacMillan \cite{MacMillan}.
+
+\begin{external}[Whole-space obstacle problem and $C^{1,1}$ regularity]\label{ext:obstacle}
+For the smooth compactly perturbed obstacles used below, the classical whole-space obstacle problem
+\[
+ \min\{-\lap u,u-h\}=0,
+ \qquad
+ \lim_{|x|\to\infty}u(x)=c
+\]
+has the standard complementarity interpretation and a $C^{1,1}$ solution. On the noncoincidence set $\{u>h\}$ the solution is harmonic; on the interior of the coincidence set it agrees with the obstacle. Its distributional Laplacian has no additional hypersurface measure because $u\in C^{1,1}$.
+\end{external}
+
+\begin{external}[Serfaty--Serra quantitative stability, specialized form]\label{ext:ss}
+We use Theorem 1.1 of Serfaty--Serra \cite{SerfatySerra} in dimension $3$. In addition to the required finite H\"older regularity of the family $h_t$ and the asymptotic constants $c(t)$, its hypotheses include the asymptotic separation and compact-support conditions (1.4)--(1.8), and quantitative assumptions of the following form: for some open $U$ containing the initial coincidence set and some $\rho>0$,
+\begin{equation}\label{eq:ssquant}
+ \lap h_0\le-\rho\quad\hbox{on }\overline U,
+ \qquad
+ u_0-h_0\ge\rho\quad\hbox{on }\R^3\setminus U,
+\end{equation}
+and every point of the initial free boundary can be touched from both sides by balls of radius $\rho$.
+Under these hypotheses, for $|t|$ sufficiently small there is a family of global diffeomorphisms $\Psi_t$, with $\Psi_0=\mathrm{id}$ and $\Psi_t\to\mathrm{id}$ in the relevant finite regularity topology, carrying the initial noncoincidence set and free boundary to those at time $t$.
+\end{external}
+
+The statement above records exactly the parts of the published theorem used in the argument; in particular, the quantitative hypotheses in \eqref{eq:ssquant} will be checked rather than suppressed.
+
+\begin{external}[Newtonian representation/uniqueness]\label{ext:uniqueness}
+If a decaying function $u$ satisfies
+\[
+ -\lap u=\1_K
+\]
+in the sense of distributions for a bounded measurable body $K\subset\R^3$, then
+\[
+ u=U_K.
+\]
+\end{external}
+
+\begin{external}[Interior potential of an ellipsoid]\label{ext:ellipsoid}
+The interior Newtonian potential of a homogeneous ellipsoid agrees on its interior with a polynomial of degree at most two.
+\end{external}
+
+For the last input see, for example, Karp \cite{Karp} or Di Fratta \cite{DiFratta}. We also use the standard facts that smooth cutoffs on nested balls exist and that a $C^1$ hypersurface in $\R^3$ has three-dimensional Lebesgue measure zero.
+
+\section{A smooth-obstacle construction near a ball}
+
+Fix a nonzero homogeneous harmonic polynomial $H$ of degree $m\ge3$ and define
+\begin{equation}\label{eq:pat}
+ p_{a,t}(x)=q_a(x)+tH(x).
+\end{equation}
+Since $\lap H=0$ and $\lap(|x|^2)=6$ in $\R^3$,
+\begin{equation}\label{eq:lap-p}
+ -\lap p_{a,t}=1.
+\end{equation}
+
+For an obstacle solution $u_t$ define the closed coincidence set, its interior, and the noncoincidence set by
+\begin{equation}\label{eq:sets}
+ C_{a,t}:=\{u_t=h_t\},\qquad
+ K_{a,t}:=\operatorname{int}C_{a,t},\qquad
+ N_{a,t}:=\{u_t>h_t\}.
+\end{equation}
+Thus $C_{a,t}$ is closed; $K_{a,t}$ is the bounded contact domain used as the uniform body.
+
+\begin{lemma}[Local polynomial inclusions near a ball]\label{lem:local}
+Fix $\alpha\in(0,1)$. For every $a>0$ there exists $\tau_a>0$ and, for $|t|<\tau_a$, bounded domains $K_{a,t}$ with $C^{1,\alpha}$ boundary such that
+\begin{equation}\label{eq:localconclusions}
+ C_{a,t}=\overline{K_{a,t}},\qquad
+ K_{a,0}=B_a,
+ \qquad
+ U_{K_{a,t}}(x)=p_{a,t}(x)\quad(x\in K_{a,t}).
+\end{equation}
+Moreover there are diffeomorphisms $\Psi_{a,t}$ with
+\begin{equation}\label{eq:diffeo}
+ C_{a,t}=\Psi_{a,t}(\overline{B_a}),\qquad
+ K_{a,t}=\Psi_{a,t}(B_a),\qquad
+ \partial K_{a,t}=\Psi_{a,t}(\partial B_a),
+\end{equation}
+and $\Psi_{a,t}\to\mathrm{id}$ in $C^1$ as $t\to0$. In particular $\overline{K_{a,t}}$ is homeomorphic to the closed ball and $\partial K_{a,t}$ is diffeomorphic to $S^2$.
+\end{lemma}
+
+\begin{proof}
+Choose radii
+\[
+ a<b<r<R
+\]
+and a cutoff $\chi\in C_c^\infty(B_R)$ such that
+\[
+ 0\le\chi\le1,
+ \qquad
+ \chi\equiv1\ \text{on }B_r.
+\]
+Fix $M>0$ and define the smooth obstacle
+\begin{equation}\label{eq:obstacle}
+ h_t(x)=\chi(x)p_{a,t}(x)-(1-\chi(x))M.
+\end{equation}
+Let $u_t$ solve the whole-space obstacle problem with the fixed asymptotic constant
+\begin{equation}\label{eq:c0}
+ c(t)\equiv0,
+ \qquad
+ \lim_{|x|\to\infty}u_t(x)=0.
+\end{equation}
+
+At $t=0$ set $u_0=U_{B_a}$. On $B_r$ one has $h_0=q_a$. Formula \eqref{eq:positivegap} shows
+\[
+ U_{B_a}=q_a\quad\hbox{on }\overline{B_a},
+ \qquad
+ U_{B_a}>q_a\quad\hbox{on }B_r\setminus\overline{B_a}.
+\]
+In the transition annulus, $h_0=\chi q_a+(1-\chi)(-M)$. Both $q_a$ and $-M$ lie strictly below $U_{B_a}$ there: the first by \eqref{eq:positivegap}, the second because $U_{B_a}>0$. Outside $B_R$ one has $h_0=-M<U_{B_a}$. Consequently
+\begin{equation}\label{eq:contact0}
+ C_{a,0}=\{u_0=h_0\}=\overline{B_a},
+ \qquad
+ K_{a,0}=B_a.
+\end{equation}
+This corrects the common but inaccurate shorthand in which the closed coincidence set is denoted by the open ball.
+
+We next verify the quantitative hypotheses of Published Input~\ref{ext:ss}. First,
+\begin{equation}\label{eq:perturb}
+ h_t-h_0=t\chi H.
+\end{equation}
+Hence the family is smooth in $(t,x)$, $\lap(h_t-h_0)$ is supported in $\overline{B_R}$, and $h_t-h_0\to0$ at infinity. Also $h_t(x)\to-M<0=c(t)$ as $|x|\to\infty$, while $c(t)\equiv0$ is $C^2$.
+
+Take
+\[
+ U=B_b.
+\]
+Because $b<r$ and $\chi\equiv1$ on $B_r$, one has $h_0=q_a$ on a neighborhood of $\overline U$, and therefore
+\[
+ \lap h_0=-1\quad\hbox{on }\overline U.
+\]
+It remains to obtain a uniform positive gap outside $U$. The continuous function $u_0-h_0$ is strictly positive on the compact annulus $\overline{B_R}\setminus B_b$, hence has a positive minimum there. Outside $B_R$,
+\[
+ u_0-h_0=U_{B_a}+M\ge M.
+\]
+Thus there exists $\delta>0$ such that
+\begin{equation}\label{eq:gap}
+ u_0-h_0\ge\delta\qquad\hbox{on }\R^3\setminus B_b.
+\end{equation}
+Finally, the sphere $\partial B_a$ has a uniform two-sided tangent-ball radius; for example any sufficiently small radius below $a$ works. Choosing
+\[
+ 0<\rho\le \min\{1,\delta,\rho_{\mathrm{ball}}\}
+\]
+verifies \eqref{eq:ssquant} and the two-sided tangent-ball condition.
+
+Published Input~\ref{ext:ss} now yields, for $|t|$ sufficiently small, a global diffeomorphism $\Psi_{a,t}$ carrying $N_{a,0}=\R^3\setminus\overline{B_a}$ and its boundary to $N_{a,t}$ and its boundary. Taking complements and using that $\Psi_{a,t}$ is a homeomorphism gives
+\[
+ C_{a,t}=\Psi_{a,t}(\overline{B_a}).
+\]
+Taking interiors and closures then gives exactly \eqref{eq:diffeo} and
+\[
+ C_{a,t}=\overline{K_{a,t}}.
+\]
+Because the diffeomorphism supplied by the theorem fixes the complement of $U=B_b$, it maps $B_b$ to itself; hence
+\[
+ C_{a,t}\subset B_b\Subset B_r.
+\]
+Thus $\chi\equiv1$ on $C_{a,t}$ and in particular, on $K_{a,t}$,
+\begin{equation}\label{eq:contactformula}
+ u_t=h_t=p_{a,t}.
+\end{equation}
+
+On $K_{a,t}$, equations \eqref{eq:lap-p} and \eqref{eq:contactformula} give $-\lap u_t=1$. On the open noncoincidence set $N_{a,t}$, the obstacle equation gives $-\lap u_t=0$. The free boundary $\partial K_{a,t}$ is a $C^1$ hypersurface and hence has Lebesgue measure zero. Since $u_t\in C^{1,1}$, its distributional Laplacian has no singular surface part. Therefore
+\begin{equation}\label{eq:distribution}
+ -\lap u_t=\1_{K_{a,t}}
+\end{equation}
+in the sense of distributions. The decay in \eqref{eq:c0} and Published Input~\ref{ext:uniqueness} imply
+\[
+ u_t=U_{K_{a,t}}.
+\]
+Together with \eqref{eq:contactformula}, this proves the potential identity in \eqref{eq:localconclusions}. The stated topology and finite regularity follow from \eqref{eq:diffeo}.
+\end{proof}
+
+\begin{remark}[Regularity claimed]
+For the historical problem, the $C^1$ sphere topology supplied above is already more than is needed. Serfaty--Serra's theorem gives finite $C^{k,\alpha}$ control when a finite $k$ is fixed in advance and the corresponding hypotheses are imposed. We do not infer a single $C^\infty$ family merely by shrinking the parameter interval separately for every $k$. A $C^\infty$ claim would require an additional higher-regularity theorem, which is unnecessary here.
+\end{remark}
+
+\section{Strict nesting}
+
+\begin{lemma}[Strict nesting of the closed inner body]\label{lem:nesting}
+There exists $t\ne0$ such that
+\begin{equation}\label{eq:strictnest}
+ \overline{K_{1,t}}\subset K_{2,t}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+At $t=0$ the relevant bodies are $\overline{B_1}$ and $B_2$, separated by a positive radial margin. By Lemma~\ref{lem:local}, the diffeomorphisms $\Psi_{1,t}$ and $\Psi_{2,t}$ converge uniformly to the identity. Their inverses also converge uniformly to the identity. Hence a common nonzero $t$ can be chosen so small that
+\[
+ \|\Psi_{1,t}-\mathrm{id}\|_{C^0}<\frac14,
+ \qquad
+ \|\Psi_{2,t}^{-1}-\mathrm{id}\|_{C^0}<\frac14.
+\]
+For $x\in\overline{K_{1,t}}=\Psi_{1,t}(\overline{B_1})$ this gives $|x|<5/4$, so
+\[
+ \overline{K_{1,t}}\subset B_{5/4}.
+\]
+If $|x|\le7/4$ and $y=\Psi_{2,t}^{-1}(x)$, then $|y|<2$, hence $x\in\Psi_{2,t}(B_2)=K_{2,t}$. Thus
+\[
+ \overline{B_{7/4}}\subset K_{2,t}.
+\]
+Since $B_{5/4}\subset B_{7/4}$, \eqref{eq:strictnest} follows.
+\end{proof}
+
+\section{The shell and its potential}
+
+Fix a nonzero $t$ as in Lemma~\ref{lem:nesting} and write
+\[
+ \Om_1=K_{1,t},\qquad
+ \Om_2=K_{2,t},\qquad
+ A=\Om_2\setminus\overline{\Om_1}.
+\]
+The shell $A$ is the material between the two boundary surfaces.
+
+\begin{lemma}[Potential of the shell]\label{lem:difference}
+For every $x\in\R^3$,
+\begin{equation}\label{eq:difference}
+ U_A(x)=U_{\Om_2}(x)-U_{\Om_1}(x).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The boundary $\partial\Om_1$ is a $C^1$ surface and therefore has three-dimensional Lebesgue measure zero. Since $\overline{\Om_1}\subset\Om_2$, the characteristic functions satisfy
+\[
+ \1_A=\1_{\Om_2}-\1_{\Om_1}
+\]
+almost everywhere. Integrating against the Newtonian kernel and using linearity gives \eqref{eq:difference}. Thus the distinction between removing $\Om_1$ and removing $\overline{\Om_1}$ has no effect on the volume potential.
+\end{proof}
+
+\begin{lemma}[Cancellation of the shared terms]\label{lem:cancellation}
+The shell potential is constant throughout the cavity:
+\[
+ U_A(x)=\frac32
+ \qquad(x\in\Om_1).
+\]
+\end{lemma}
+
+\begin{proof}
+For $a=1$ and $a=2$ the constants $d_a=a^2/2$ are
+\[
+ d_1=\frac12,
+ \qquad
+ d_2=2.
+\]
+For $x\in\Om_1\subset\Om_2$, Lemma~\ref{lem:local} gives
+\begin{align*}
+ U_{\Om_1}(x)&=\frac12-\frac{|x|^2}{6}+tH(x),\\
+ U_{\Om_2}(x)&=2-\frac{|x|^2}{6}+tH(x).
+\end{align*}
+Using Lemma~\ref{lem:difference},
+\begin{align*}
+ U_A(x)
+ &=U_{\Om_2}(x)-U_{\Om_1}(x)\\
+ &=\left(2-\frac{|x|^2}{6}+tH(x)\right)
+   -\left(\frac12-\frac{|x|^2}{6}+tH(x)\right)\\
+ &=\frac32.
+\end{align*}
+\end{proof}
+
+\section{Nonellipsoidality and the counterexample}
+
+\begin{lemma}[The two domains are nonellipsoidal]\label{lem:nonellipsoid}
+Neither $\Om_1$ nor $\Om_2$ is an ellipsoid.
+\end{lemma}
+
+\begin{proof}
+For $i=1,2$, on the nonempty open set $\Om_i$ the potential agrees with
+\[
+ p_i(x)=d_i-\frac{|x|^2}{6}+tH(x),
+\]
+whose degree-$m$ homogeneous part is the nonzero polynomial $tH$, with $m\ge3$.
+
+Suppose $\Om_i$ were an ellipsoid. Published Input~\ref{ext:ellipsoid} would give a polynomial $e_i$ of degree at most two such that $U_{\Om_i}=e_i$ on $\Om_i$. Hence the two polynomials $p_i$ and $e_i$ agree on the nonempty open set $\Om_i$. By the polynomial identity principle over $\R$, they agree identically. This is impossible because $p_i$ has a nonzero homogeneous term of degree $m\ge3$, while $e_i$ has degree at most two. Thus $\Om_i$ is not an ellipsoid.
+\end{proof}
+
+\begin{theorem}[Counterexample to Problem 129]\label{thm:counterexample129}
+The printed form of Nikliborc Problem 129 admits the following counterexample. There exist nested $C^{1,\alpha}$ closed surfaces $S_1,S_2\subset\R^3$, each diffeomorphic to $S^2$, such that the homogeneous shell between them has constant Newtonian potential throughout the cavity, while the two surfaces are not homothetic ellipsoids.
+\end{theorem}
+
+\begin{proof}
+Take $\Om_1,\Om_2$ and $A$ above and put $S_i=\partial\Om_i$. Lemma~\ref{lem:local} gives $S_i\simeq S^2$, and Lemma~\ref{lem:nesting} gives the genuine separation $\overline{\Om_1}\subset\Om_2$. Lemma~\ref{lem:cancellation} shows that the potential of the uniform shell $A$ is identically $3/2$ throughout the cavity $\Om_1$. By Lemma~\ref{lem:nonellipsoid}, neither bounded domain is an ellipsoid. In particular its boundary cannot be an ellipsoidal surface; hence the pair cannot consist of homothetic ellipsoids. This contradicts the proposed conclusion of Problem~\ref{prob:129}.
+\end{proof}
+
+\begin{remark}[Why the smooth obstacle is used]
+The construction deliberately avoids applying free-boundary stability directly to the piecewise/truncated obstacle used in the original polynomial-inclusion construction. Such an application would require additional justification at the truncation interface. The smooth obstacle \eqref{eq:obstacle} puts the family directly into the regularity setting of Serfaty--Serra's theorem.
+\end{remark}
+
+
+\section*{Acknowledgments}
+Chuyang Chen and Chenhao Bian are grateful to their advisor, Fei Yu, for his guidance on this project.
+
+\section*{Independent review and Lean verification notice}
+\begingroup
+\small
+\begin{center}
+\begin{minipage}{0.94\linewidth}
+\centering
+\textbf{\large No independent human mathematical review has been performed.}
+\end{minipage}
+\end{center}
+
+\medskip
+\noindent The accompanying Lean file compiles under Lean 4.33.1 / Mathlib version v4.33.1 (exact mathlib revision \texttt{0df444a360eaa60ab8c11dca51a86af692955474}).
+
+\medskip
+\noindent The principal Lean theorem is conditional on the explicit \texttt{PublishedTheory} interface; those external mathematical inputs are not proved in the Lean file.
+
+\medskip
+\noindent\textbf{Successful Lean verification establishes correctness of the formalized statement relative to its assumptions. It does not by itself establish that the formalized statement is exactly equivalent to the historical problem as originally formulated.}
+\endgroup
+
+\section*{Provenance and contacts}
+\begingroup\small\sloppy
+\begin{description}
+\item[Project curator.] Fei Yu.
+\item[AI-generation coordinators and contacts.] Chuyang Chen (\href{mailto:22535018@zju.edu.cn}{22535018@zju.edu.cn}); Chenhao Bian (\href{mailto:bch26@mails.tsinghua.edu.cn}{bch26@mails.tsinghua.edu.cn}).
+\item[Mathematical draft generation.] Mathematical drafts were generated with GPT-5.6 Sol under their supervision.
+\item[Lean code generation.] The accompanying Lean source was generated and revised with GPT-5.6 Sol under their supervision. This is a code-generation provenance statement and is separate from mathematical review.
+\item[Lean build/kernel execution.] The local build and kernel-check commands reported below were executed by Chuyang Chen in the recorded project environment.
+\item[Human mathematical verification.] NONE.
+\item[Statement-correspondence audit.] NONE. No independent human audit has certified that the natural-language statement and the formal Lean statement are exactly equivalent.
+\end{description}
+\medskip
+\noindent Comments, corrections, historical references, and independent verification are very welcome. For long-term correspondence, readers are encouraged to use the repository issue tracker as well as the contacts above.
+\endgroup
+
+\section*{Lean formal verification record}
+
+\begingroup\small\sloppy
+This record separates the natural-language statement, the formal Lean statement, kernel checking of the proof term, and the separate audit of the correspondence between the first two. Kernel acceptance is not treated as human verification of the original problem.
+
+\begin{description}
+\item[Formalization status.] Conditional F1 for the formal theorem; full-paper/original-problem formalization remains PARTIAL.
+\item[Lean source.] \texttt{\detokenize{PaperFormalization/Scottish 129/Main.lean}}.
+\item[Principal formal theorem.] \texttt{\detokenize{Nikliborc129.negative_answer_129}} with explicit parameter \texttt{\detokenize{pub : PublishedTheory}}.
+\item[Build command.] \texttt{\detokenize{lake env lean "PaperFormalization/Scottish 129/Main.lean"}}.
+\item[Build/kernel result.] PASS for the conditional theorem stated above.
+\item[Lean version.] Lean 4.33.1 (commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6).
+\item[Library snapshot.] mathlib v4.33.1, exact revision 0df444a360eaa60ab8c11dca51a86af692955474.
+\item[Project commit.] PENDING -- the final verified working tree has not yet been committed.
+\item[Kernel axiom audit.] The principal theorem depends only on \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound} at the Lean axiom level. There is no user-defined Lean axiom in that dependency audit.
+\item[Explicit mathematical assumptions.] The parameter \texttt{PublishedTheory} contains 27 explicit theorem interfaces. They cover: polynomial/analytic Laplacian bridges (\texttt{laplacian\_eval\_cubic}, \texttt{laplacian\_congr\_nhds}); smooth cutoffs; the homogeneous-ball Newtonian potential (inside formula, exterior gap, positivity, $C^{1,1}$ regularity, decay, and Poisson identity); whole-space obstacle complementarity, existence, uniqueness, and the Serfaty--Serra stability interface; local-integrability and distributional-Laplacian bridges; Newtonian representation/uniqueness, continuity, and kernel integrability; two-sided ball geometry, nullity of $C^1$ sphere images, null-set almost-everywhere facts, homeomorphic images of ball closure/frontier/interior, and unicoherence; and the classical theorem that the interior Newtonian potential of a solid ellipsoid is quadratic. These interfaces are assumptions of the conditional theorem and are not proved inside this Lean file.
+\item[Scope note.] The article-specific deductions from \texttt{PublishedTheory} are kernel-checked, but the 27 external theorem interfaces themselves are not formalized here. Consequently a clean \texttt{\#print axioms} result does not make this an unconditional full-paper formalization.
+\end{description}
+
+\noindent\textbf{Interpretation of the label.} F1 applies to the conditional formal theorem named \texttt{\detokenize{negative_answer_129}}, with explicit parameter \texttt{\detokenize{pub : PublishedTheory}}. The full mathematical argument remains PARTIAL until the \texttt{PublishedTheory} inputs are themselves formalized (or otherwise covered by a separately declared verification policy). F2 would additionally require a human statement-correspondence audit.
+\endgroup
+
+\section{Formalization boundary for Lean}
+
+The associated Lean development will follow the convention that public, citable analytic theorems may be introduced as accurately stated external theorem interfaces, while all deductions and constructions specific to this note must be proved in Lean.
+
+\subsection*{Published interfaces allowed as external inputs}
+\begin{enumerate}[label=\textbf{E129.\arabic*.}]
+\item The ball-potential formula in Published Input~\ref{ext:ball}.
+\item Standard existence, complementarity and $C^{1,1}$ regularity for the whole-space obstacle problem in the form of Published Input~\ref{ext:obstacle}.
+\item Serfaty--Serra Theorem 1.1 in the precise form used in Published Input~\ref{ext:ss}; its hypotheses may not be omitted from the interface.
+\item The decaying Newtonian representation/uniqueness theorem, Published Input~\ref{ext:uniqueness}.
+\item The classical quadratic-interior-potential theorem for ellipsoids, Published Input~\ref{ext:ellipsoid}.
+\item Standard existence of smooth cutoffs on nested balls and the measure-zero theorem for $C^1$ hypersurfaces.
+\end{enumerate}
+
+\subsection*{Claims that must be proved in Lean}
+\begin{enumerate}[label=\textbf{L129.\arabic*.}]
+\item Define $q_a$, $p_{a,t}$ and $h_t$ and prove $-\lap p_{a,t}=1$ and $h_t-h_0=t\chi H$.
+\item Prove the exact unperturbed coincidence-set identity $C_{a,0}=\overline{B_a}$ and $K_{a,0}=B_a$; the closed contact set may not be identified with the open ball.
+\item With $a<b<r<R$ and $U=B_b$, prove the compact-support/asymptotic conditions, $\lap h_0=-1$ on $\overline U$, the uniform positive gap outside $U$, the two-sided tangent-ball bound, and $c(t)\equiv0$ required to invoke Serfaty--Serra.
+\item From the published diffeomorphism theorem, prove $C_{a,t}=\Psi_{a,t}(\overline{B_a})$, $K_{a,t}=\Psi_{a,t}(B_a)$ and $C_{a,t}=\overline{K_{a,t}}$, including the sphere topology of the boundary.
+\item Prove that the contact set remains where $\chi=1$, derive $u_t=p_{a,t}$ on $K_{a,t}$, and use $C^{1,1}$ regularity plus the measure-zero free boundary to derive $-\lap u_t=\1_{K_{a,t}}$ distributionally. Then invoke the published uniqueness interface to obtain $u_t=U_{K_{a,t}}$.
+\item Prove the strict nesting statement $\overline{K_{1,t}}\subset K_{2,t}$ from uniform closeness of the two diffeomorphisms and their inverses.
+\item Define the shell as $A=K_{2,t}\setminus\overline{K_{1,t}}$ and prove the almost-everywhere characteristic-function identity and hence Lemma~\ref{lem:difference} from the integral definition of the Newtonian potential.
+\item Prove the exact cancellation in Lemma~\ref{lem:cancellation}, including $2-1/2=3/2$.
+\item Prove the polynomial identity step and use it with the nonzero high-degree term to deduce Lemma~\ref{lem:nonellipsoid}; nonellipsoidality may not be stored as a certificate field.
+\item Assemble Theorem~\ref{thm:counterexample129}, including topology, genuine nesting, constant cavity potential, and failure of the homothetic-ellipsoid conclusion.
+\end{enumerate}
+
+Thus the final Lean theorem must not assume a ``ShellCounterexampleCertificate'' already containing the contact-set structure, nesting, potential formulas, or nonellipsoidality. Those are precisely the article-specific claims to be verified.
+
+\begin{thebibliography}{9}
+\bibitem{ScottishBook}
+R. D. Mauldin (ed.), \emph{The Scottish Book: Mathematics from the Scottish Caf\'e, with Selected Problems from the New Scottish Book}, 2nd ed., Birkh\"auser/Springer, 2015. DOI: 10.1007/978-3-319-22897-6.
+
+\bibitem{YuanLiu}
+T. Yuan and L. Liu, ``Polynomial inclusions: definitions, applications, and open problems,'' \emph{Journal of the Mechanics and Physics of Solids} 181 (2023), 105440. DOI: 10.1016/j.jmps.2023.105440.
+
+\bibitem{SerfatySerra}
+S. Serfaty and J. Serra, ``Quantitative stability of the free boundary in the obstacle problem,'' \emph{Analysis \& PDE} 11 (2018), no. 7, 1803--1839. DOI: 10.2140/apde.2018.11.1803.
+
+\bibitem{MacMillan}
+W. D. MacMillan, \emph{The Theory of the Potential}, McGraw--Hill, New York and London, 1930.
+
+\bibitem{Karp}
+L. Karp, ``On the Newtonian potential of ellipsoids,'' \emph{Complex Variables, Theory and Application} 25 (1994), 367--371. DOI: 10.1080/17476939408814757.
+
+\bibitem{DiFratta}
+G. Di Fratta, ``The Newtonian potential and the demagnetizing factors of the general ellipsoid,'' \emph{Proceedings of the Royal Society A} 472 (2016), 20160197. DOI: 10.1098/rspa.2016.0197.
+\end{thebibliography}
+
+\end{document}
