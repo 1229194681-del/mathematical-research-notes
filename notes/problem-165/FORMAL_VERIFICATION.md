@@ -1,10 +1,12 @@
-﻿# Formal Verification — Problem 165
+# Formal Verification — Problem 165
 
 ## Status
 
 **Formal verification: F1**
 
 **Build/kernel check: PASS**
+
+**Lean/source snapshot commit:** `319844f011f58dc2a3a1de0dfb6f33b80af5a53a`
 
 ## Environment
 
@@ -69,4 +71,3 @@ The recorded PASS result was obtained in the original `PaperFormalization` Lake 
 - mathlib requested revision: `v4.33.1`
 - mathlib exact revision: `0df444a360eaa60ab8c11dca51a86af692955474`
 - Build/kernel result: `PASS`
-

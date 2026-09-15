@@ -1,4 +1,4 @@
-﻿# Formal Verification — Problem 129
+# Formal Verification — Problem 129
 
 ## Status
 
@@ -7,6 +7,8 @@
 **Full-paper formalization: PARTIAL**
 
 **Build/kernel check: PASS**
+
+**Lean/source snapshot commit:** `319844f011f58dc2a3a1de0dfb6f33b80af5a53a`
 
 ## Environment
 
@@ -80,4 +82,3 @@ Successful Lean verification establishes correctness of the formalized statement
 The `Main.lean` file in this public directory is a source snapshot.
 
 The recorded PASS result was obtained in the original `PaperFormalization` Lake project layout using the source path shown above.
-

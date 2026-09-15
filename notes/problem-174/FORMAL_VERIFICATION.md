@@ -1,10 +1,12 @@
-﻿# Formal Verification — Problem 174
+# Formal Verification — Problem 174
 
 ## Status
 
 **Formal verification: F1 for a related real-scalar counterexample**
 
 **Build/kernel check: PASS**
+
+**Lean/source snapshot commit:** `319844f011f58dc2a3a1de0dfb6f33b80af5a53a`
 
 ## Environment
 
@@ -73,4 +75,3 @@ The recorded PASS result was obtained in the original development layout at:
 `PaperFormalization/Scottish 174/Main.lean`
 
 A deprecation warning concerning `ContinuousLinearMap.mul_apply` was emitted; it did not invalidate compilation or kernel checking.
-
