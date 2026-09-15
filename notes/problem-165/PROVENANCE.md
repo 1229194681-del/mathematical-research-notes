@@ -4,7 +4,7 @@
 
 **Current status:** E1 — AI cross-checked; NOT HUMAN VERIFIED
 
-**First public release:** PENDING
+**First public release:** 2026-09-15
 
 ## Candidate generation
 
@@ -54,4 +54,5 @@ Chuyang Chen and Chenhao Bian are grateful to their advisor, Fei Yu, for his gui
 ## Important verification limitation
 
 Successful Lean verification establishes correctness of the formalized statement relative to its assumptions. It does not by itself establish that the formalized statement is exactly equivalent to the historical problem as originally formulated.
+
 

@@ -6,7 +6,7 @@
 
 **Version:** v1.0
 
-**First public release:** PENDING
+**First public release:** 2026-09-15
 
 > **No independent human mathematical review has been performed.**
 
@@ -34,4 +34,5 @@ Successful Lean verification establishes correctness of the formalized statement
 Readers who identify an error, know relevant prior literature, or wish to check the argument are encouraged to contact the coordinators or open an issue in this repository.
 
 [Back to repository index](../../)
+
 

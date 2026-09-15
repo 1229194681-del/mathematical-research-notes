@@ -49,7 +49,8 @@ Chuyang Chen and Chenhao Bian are grateful to their advisor, Fei Yu, for his gui
 
 ## Publication status
 
-First public release: **PENDING**
+First public release: **2026-09-15**
 
 Current version: **v1.0**
+
 
